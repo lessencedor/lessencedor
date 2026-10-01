@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import ContactForm from './ContactForm';
 
-const GOLD = "#B8923F";
-const CREAM = "#F8F5EF";
-const DARK = "#1A1A1A";
-const WARM = "#2C2C2C";
-const GREY = "#6B6B6B";
-const LIGHT = "#A0A0A0";
+/* Palette: dark chocolate system */
+const DEEP = "#1F150C";      // deepest: hero veil, footer
+const CHOC = "#2D1F12";      // dark chocolate (base)
+const COCOA = "#3B2A19";     // bitter cocoa, lifted panels
+const GOLD = "#B08838";      // matte gold
+const GOLD_L = "#C9A55C";    // gold for text on dark
+const CREAM = "#FBF6EE";
+const CREAM_D = "rgba(251,246,238,0.74)";
+const CREAM_M = "rgba(251,246,238,0.5)";
+const LINE = "rgba(176,136,56,0.28)";
 const F = "'Cormorant Garamond', serif";
 
 const MARK_URL = "/mark.svg";
 const LOGO_URL = "/logo.svg";
+
+/* Matte foil: low-contrast metallic gradient, very slow drift */
+const FOIL = "linear-gradient(115deg,#8A6828 0%,#C4A057 30%,#A98334 52%,#CDAA60 74%,#92702C 100%)";
 
 const T = {
   en: {
@@ -155,28 +162,60 @@ const T = {
 
 function useInView(ref){
   const [v,setV]=useState(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
- useEffect(()=>{
-    if(!ref.current)return;
-    const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setV(true);},{threshold:0.12});
-    o.observe(ref.current);return ()=>o.disconnect();
-  },[]);
+  useEffect(()=>{
+    const el=ref.current;
+    if(!el)return;
+    const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){setV(true);o.disconnect();}},{threshold:0.12});
+    o.observe(el);
+    return ()=>o.disconnect();
+  },[ref]);
   return v;
 }
-function FI({children,delay}){
+
+/* Entrance: "rise" (text), "fade" (lines, quiet), "scale" (symbols) */
+function FI({children,delay,type}){
   const ref=useRef(null);const v=useInView(ref);const d=delay||0;
-  return <div ref={ref} style={{opacity:v?1:0,transform:v?"translateY(0)":"translateY(28px)",transition:"opacity 0.9s ease "+d+"s, transform 0.9s ease "+d+"s"}}>{children}</div>;
+  const k=type||"rise";
+  const hidden = k==="scale" ? "scale(.94)" : k==="fade" ? "none" : "translateY(26px)";
+  return <div ref={ref} style={{opacity:v?1:0,transform:v?"none":hidden,transition:"opacity 1.1s ease "+d+"s, transform 1.2s cubic-bezier(.2,.7,.2,1) "+d+"s"}}>{children}</div>;
 }
-function GL(){return <div style={{display:"flex",justifyContent:"center",margin:"24px 0"}}><div style={{width:80,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)"}}/></div>;}
-function Img({size,full}){return <img src={full?LOGO_URL:MARK_URL} alt="" style={{width:size||60,height:"auto",verticalAlign:"middle"}}/>;}
 
+/* Hairline with gold fade */
+function GL({w}){return <div style={{display:"flex",justifyContent:"center",margin:"28px 0"}}><div style={{width:w||80,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)"}}/></div>;}
 
+/* Matte gold foil applied to the vector logo via CSS mask */
+function Foil({src,ratio,width,label,drift}){
+  return <div role="img" aria-label={label||"L'Essence d'Or"} style={{
+    width:width,maxWidth:"100%",aspectRatio:ratio,margin:"0 auto",
+    backgroundImage:FOIL,backgroundSize:"240% 100%",
+    WebkitMaskImage:"url("+src+")",maskImage:"url("+src+")",
+    WebkitMaskRepeat:"no-repeat",maskRepeat:"no-repeat",
+    WebkitMaskSize:"contain",maskSize:"contain",
+    WebkitMaskPosition:"center",maskPosition:"center",
+    animation:drift===false?"none":"foil 18s ease-in-out infinite"
+  }}/>;
+}
+const Logo=function(p){return <Foil src={LOGO_URL} ratio="870 / 480" width={p.width} drift={p.drift}/>;};
+const Mark=function(p){return <Foil src={MARK_URL} ratio="400 / 370" width={p.width} drift={p.drift}/>;};
+
+function useIsMobile(){
+  const [m,setM]=useState(typeof window!=="undefined"&&window.innerWidth<900);
+  useEffect(()=>{
+    const f=function(){setM(window.innerWidth<900);};
+    window.addEventListener("resize",f);return function(){window.removeEventListener("resize",f);};
+  },[]);
+  return m;
+}
 
 export default function App(){
   const [lang,setLang]=useState("en");
   const [sc,setSc]=useState(false);
-  const [splash,setSplash]=useState(true);
+  const [splash,setSplash]=useState(function(){
+    try{return !window.sessionStorage.getItem("ld_seen");}catch(e){return true;}
+  });
   const [openDim,setOpenDim]=useState(-1);
+  const [menu,setMenu]=useState(false);
+  const mobile=useIsMobile();
   const t=T[lang];
 
   useEffect(()=>{
@@ -185,109 +224,140 @@ export default function App(){
     link.rel="stylesheet";document.head.appendChild(link);
     var h=function(){setSc(window.scrollY>60);};
     window.addEventListener("scroll",h);
-    setTimeout(function(){setSplash(false);},2800);
     return function(){window.removeEventListener("scroll",h);};
   },[]);
 
-  var go=function(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});};
-  var S=function(text){return <h2 style={{fontFamily:F,fontSize:"clamp(28px,4vw,42px)",fontWeight:300,color:GOLD,letterSpacing:".15em",textAlign:"center",textTransform:"uppercase"}}>{text}</h2>;};
-  var P=function(text,extra){return <p style={Object.assign({},{fontFamily:F,fontSize:"clamp(16px,2vw,19px)",lineHeight:1.8,color:WARM,maxWidth:680,margin:"0 auto",textAlign:"center"},extra||{})}>{text}</p>;};
+  useEffect(()=>{
+    if(!splash)return;
+    var id=setTimeout(function(){
+      setSplash(false);
+      try{window.sessionStorage.setItem("ld_seen","1");}catch(e){}
+    },1900);
+    return function(){clearTimeout(id);};
+  },[splash]);
+
+  var go=function(id){setMenu(false);var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth"});};
+  var S=function(text,color){return <h2 style={{fontFamily:F,fontSize:"clamp(28px,4vw,42px)",fontWeight:300,color:color||GOLD_L,letterSpacing:".15em",textAlign:"center",textTransform:"uppercase"}}>{text}</h2>;};
+  var P=function(text,extra){return <p style={Object.assign({},{fontFamily:F,fontSize:"clamp(17px,2vw,20px)",lineHeight:1.85,color:CREAM_D,maxWidth:680,margin:"0 auto",textAlign:"center"},extra||{})}>{text}</p>;};
+
+  var pad="clamp(70px,9vw,120px) clamp(24px,6vw,80px)";
 
   return (
-    <div style={{fontFamily:F,background:CREAM,color:DARK,overflowX:"hidden"}}>
-      <style>{"*{margin:0;padding:0;box-sizing:border-box}body{background:#F8F5EF}html{scroll-behavior:smooth}section{margin:0;border:0;display:block}body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}::selection{background:"+GOLD+";color:"+CREAM+"}a{transition:opacity .3s ease}a:hover{opacity:.75}button{transition:opacity .3s ease}button:hover{opacity:.7}@keyframes fu{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}@keyframes br{0%,100%{opacity:.3}50%{opacity:.8}}@keyframes xl{from{width:0}to{width:100px}}@keyframes sf{from{opacity:1}to{opacity:0;pointer-events:none}}@keyframes sl{0%{opacity:0;transform:scale(.96)}35%{opacity:1;transform:scale(1)}75%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.01)}}"}</style>
+    <div style={{fontFamily:F,background:CHOC,color:CREAM,overflowX:"hidden"}}>
+      <style>{"*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:"+CHOC+";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}section{display:block;position:relative}::selection{background:"+GOLD+";color:"+DEEP+"}a{transition:opacity .3s ease}a:hover{opacity:.75}button{transition:opacity .3s ease}button:hover{opacity:.75}"+
+      "@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes br{0%,100%{opacity:.25}50%{opacity:.75}}@keyframes xl{from{width:0}to{width:110px}}@keyframes sf{from{opacity:1}to{opacity:0;pointer-events:none}}@keyframes sl{0%{opacity:0;transform:scale(.96)}40%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1)}}"+
+      "@keyframes foil{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}"+
+      "@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}video{display:none!important}}"}</style>
 
-      {splash&&<div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:CREAM,zIndex:9999,display:"flex",justifyContent:"center",alignItems:"center",animation:"sf 0.6s ease 2.2s forwards"}}><img src={LOGO_URL} alt="" style={{width:"clamp(220px,42vw,340px)",height:"auto",animation:"sl 2.4s ease forwards"}}/></div>}
+      {/* Film grain: tactile warmth */}
+      <div aria-hidden="true" style={{position:"fixed",inset:0,zIndex:90,pointerEvents:"none",opacity:.07,mixBlendMode:"soft-light",backgroundImage:"url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")"}}/>
 
-      {/* NAV: fixed, logo left, hamburger right on scroll */}
-      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:sc?"rgba(248,245,239,0.97)":"transparent",backdropFilter:sc?"blur(12px)":"none",borderBottom:sc?"1px solid rgba(184,146,63,0.12)":"none",transition:"all .5s",padding:sc?"10px 24px":"20px 24px"}}>
+      {/* Splash: brief, once per session */}
+      {splash&&<div style={{position:"fixed",inset:0,background:DEEP,zIndex:9999,display:"flex",justifyContent:"center",alignItems:"center",animation:"sf .7s ease 1.2s forwards"}}><div style={{width:"clamp(220px,40vw,360px)",animation:"sl 1.4s ease forwards"}}><Logo width="100%" drift={false}/></div></div>}
+
+      {/* NAV */}
+      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:(sc||menu)?"rgba(31,21,12,0.92)":"transparent",backdropFilter:sc?"blur(14px)":"none",WebkitBackdropFilter:sc?"blur(14px)":"none",borderBottom:sc?"1px solid "+LINE:"1px solid transparent",transition:"all .5s",padding:sc?"10px 24px":"22px 24px"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <button onClick={function(){go("home")}} style={{background:"none",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:8}}>
-            <Img size={26}/>
-            {!sc&&<span style={{fontFamily:F,fontSize:13,letterSpacing:".12em",color:GREY,fontWeight:400}}>L'ESSENCE D'OR</span>}
+          <button onClick={function(){go("home")}} aria-label="Home" style={{background:"none",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
+            <div style={{width:30}}><Mark width="100%" drift={false}/></div>
+            {!sc&&!mobile&&<span style={{fontFamily:F,fontSize:13,letterSpacing:".2em",color:CREAM_D,fontWeight:400}}>L'ESSENCE D'OR</span>}
           </button>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
-            {/* Nav links - desktop only */}
-            {sc&&<div style={{display:"flex",gap:0,marginRight:8}}>
+            {sc&&!mobile&&<div style={{display:"flex",gap:0,marginRight:8}}>
               {t.nav.map(function(n,i){
-                return <button key={i} onClick={function(){go(t.ids[i])}} style={{fontFamily:F,fontSize:10,letterSpacing:".06em",textTransform:"uppercase",color:GREY,background:"none",border:"none",cursor:"pointer",padding:"6px 6px"}}>{n}</button>;
+                return <button key={i} onClick={function(){go(t.ids[i])}} style={{fontFamily:F,fontSize:11,letterSpacing:".1em",textTransform:"uppercase",color:CREAM_D,background:"none",border:"none",cursor:"pointer",padding:"6px 8px"}}>{n}</button>;
               })}
             </div>}
-            <div style={{display:"flex",gap:2,borderLeft:"1px solid rgba(184,146,63,0.2)",paddingLeft:12}}>
-              <button onClick={function(){setLang("en")}} style={{fontFamily:F,fontSize:11,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="en"?GOLD:LIGHT,borderBottom:lang==="en"?"1px solid "+GOLD:"1px solid transparent"}}>EN</button>
-              <button onClick={function(){setLang("pt")}} style={{fontFamily:F,fontSize:11,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="pt"?GOLD:LIGHT,borderBottom:lang==="pt"?"1px solid "+GOLD:"1px solid transparent"}}>PT</button>
+            {mobile&&<button onClick={function(){setMenu(!menu)}} aria-label="Menu" style={{background:"none",border:"none",cursor:"pointer",padding:"8px 6px",display:"flex",flexDirection:"column",gap:6}}>
+              <span style={{display:"block",width:22,height:1,background:GOLD_L,transform:menu?"translateY(3.5px) rotate(45deg)":"none",transition:"transform .3s"}}/>
+              <span style={{display:"block",width:22,height:1,background:GOLD_L,transform:menu?"translateY(-3.5px) rotate(-45deg)":"none",transition:"transform .3s"}}/>
+            </button>}
+            <div style={{display:"flex",gap:2,borderLeft:"1px solid "+LINE,paddingLeft:12}}>
+              <button onClick={function(){setLang("en")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="en"?GOLD_L:CREAM_M,borderBottom:lang==="en"?"1px solid "+GOLD_L:"1px solid transparent"}}>EN</button>
+              <button onClick={function(){setLang("pt")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="pt"?GOLD_L:CREAM_M,borderBottom:lang==="pt"?"1px solid "+GOLD_L:"1px solid transparent"}}>PT</button>
             </div>
           </div>
         </div>
+        {mobile&&menu&&<div style={{padding:"18px 0 10px",display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+          {t.nav.map(function(n,i){
+            return <button key={i} onClick={function(){go(t.ids[i])}} style={{fontFamily:F,fontSize:16,letterSpacing:".16em",textTransform:"uppercase",color:CREAM,background:"none",border:"none",cursor:"pointer",padding:"11px 0"}}>{n}</button>;
+          })}
+        </div>}
       </nav>
 
-      {/* HERO */}
-      <section id="home" style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:"0 24px",position:"relative"}}>
-        
-        <div style={{animation:"fu 1.2s ease",textAlign:"center",position:"relative"}}>
-          <Img size={260} full/>
-          <div style={{display:"flex",justifyContent:"center",margin:"28px 0"}}>
-            <div style={{height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)",animation:"xl 1.5s ease forwards",animationDelay:".8s",width:0}}/>
+      {/* HERO: film, chocolate veil, foil logo */}
+      <section id="home" style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:"0 24px",overflow:"hidden",background:DEEP}}>
+        <div style={{position:"absolute",inset:0,animation:"kb 24s ease-in-out infinite alternate"}}>
+          <video autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg" aria-hidden="true" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}>
+            <source src="/hero.mp4" type="video/mp4"/>
+          </video>
+        </div>
+        <div style={{position:"absolute",inset:0,background:"rgba(31,21,12,0.52)"}}/>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 46%,rgba(31,21,12,0.55) 0%,rgba(31,21,12,0) 62%)"}}/>
+        <div style={{position:"absolute",left:0,right:0,bottom:0,height:"30%",background:"linear-gradient(to bottom,rgba(45,31,18,0),"+CHOC+")"}}/>
+
+        <div style={{animation:"fu 1.6s ease 1.5s both",textAlign:"center",position:"relative",width:"100%",maxWidth:480}}>
+          <Logo width="clamp(250px,34vw,440px)"/>
+          <div style={{display:"flex",justifyContent:"center",margin:"34px 0 30px"}}>
+            <div style={{height:1,background:"linear-gradient(90deg,transparent,"+GOLD_L+",transparent)",animation:"xl 1.6s ease forwards",animationDelay:"2.4s",width:0}}/>
           </div>
-          <p style={{fontFamily:F,fontSize:"clamp(12px,1.6vw,15px)",letterSpacing:".18em",color:GREY,textTransform:"uppercase",animation:"fu 1.2s ease .4s both"}}>{t.tag}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(12px,1.5vw,15px)",letterSpacing:".32em",color:CREAM_D,textTransform:"uppercase"}}>{t.tag}</p>
         </div>
-        <div style={{position:"absolute",bottom:40,animation:"br 2.5s ease infinite"}}>
-          <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={GOLD} strokeWidth="1" opacity=".3"/><circle cx="10" cy="10" r="2" fill={GOLD} opacity=".5"/></svg>
+        <div style={{position:"absolute",bottom:34,animation:"br 2.8s ease infinite"}}>
+          <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={GOLD_L} strokeWidth="1" opacity=".6"/><circle cx="10" cy="10" r="2" fill={GOLD_L} opacity=".8"/></svg>
         </div>
       </section>
 
-      {/* ABOUT: What is it, what does it do, who is it for */}
-      <section id="about" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,80px)",background:CREAM}}>
+      {/* ABOUT */}
+      <section id="about" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.abt)}<GL/></FI>
-        <FI delay={0.2}>{P(t.ab1)}</FI>
+        <FI delay={0.15}>{P(t.ab1,{fontSize:"clamp(21px,2.6vw,28px)",lineHeight:1.6,color:CREAM,maxWidth:800,fontWeight:300})}</FI>
+        <div style={{height:40}}/>
+        <FI delay={0.2}>{P(t.ab2)}</FI>
         <div style={{height:24}}/>
-        <FI delay={0.3}>{P(t.ab2)}</FI>
+        <FI delay={0.25}>{P(t.ab3)}</FI>
         <div style={{height:24}}/>
-        <FI delay={0.4}>{P(t.ab3)}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.5}>{P(t.ab4)}</FI>
-        <div style={{height:20}}/>
-        <FI delay={0.6}>{P(t.vc,{fontStyle:"italic",color:LIGHT,fontSize:"clamp(14px,1.6vw,16px)"})}</FI>
+        <FI delay={0.3}>{P(t.ab4)}</FI>
+        <div style={{height:36}}/>
+        <FI delay={0.35}>{P(t.vc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(16px,1.8vw,19px)"})}</FI>
       </section>
-
 
       {/* DIMENSIONS */}
-      <section id="dimensions" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,60px)",background:CREAM}}>
+      <section id="dimensions" style={{padding:pad,background:COCOA}}>
         <FI>{S(t.dt)}<GL/>{P(t.di)}</FI>
-        <div style={{marginTop:48,maxWidth:760,margin:"48px auto 0"}}>
+        <div style={{maxWidth:820,margin:"56px auto 0",borderTop:"1px solid "+LINE}}>
           {t.dims.map(function(d,i){
             var isOpen=openDim===i;
-            return (<FI key={d.n} delay={i*0.08}>
-              <div onClick={function(){setOpenDim(isOpen?-1:i)}}
-                style={{cursor:"pointer",padding:"24px 32px",marginBottom:1,background:isOpen?"rgba(184,146,63,0.04)":"transparent",borderLeft:isOpen?"2px solid "+GOLD:"2px solid transparent",transition:"all 0.4s ease"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                  <div style={{display:"flex",alignItems:"baseline",gap:16}}>
-                    <span style={{fontFamily:F,fontSize:13,letterSpacing:".2em",color:isOpen?GOLD:LIGHT,transition:"color 0.4s"}}>{d.n}</span>
-                    <span style={{fontFamily:F,fontSize:19,fontWeight:400,color:isOpen?GOLD:WARM,letterSpacing:".06em",transition:"color 0.4s"}}>{d.nm}</span>
+            var has=!!d.d;
+            return (<FI key={d.n} delay={i*0.07} type="fade">
+              <div onClick={function(){if(has)setOpenDim(isOpen?-1:i)}}
+                style={{cursor:has?"pointer":"default",padding:"26px 8px",borderBottom:"1px solid "+LINE,transition:"background .5s ease",background:isOpen?"rgba(176,136,56,0.07)":"transparent"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:16,flexWrap:"wrap"}}>
+                  <div style={{display:"flex",alignItems:"baseline",gap:22}}>
+                    <span style={{fontFamily:F,fontSize:14,letterSpacing:".2em",color:GOLD_L,minWidth:28}}>{d.n}</span>
+                    <span style={{fontFamily:F,fontSize:"clamp(22px,2.6vw,28px)",fontWeight:300,color:isOpen?GOLD_L:CREAM,letterSpacing:".05em",transition:"color .4s"}}>{d.nm}</span>
                   </div>
-                  <span style={{fontFamily:F,fontSize:13,letterSpacing:".1em",color:GREY,textTransform:"uppercase",fontStyle:"italic"}}>{d.s}</span>
+                  <span style={{fontFamily:F,fontSize:13,letterSpacing:".14em",color:CREAM_M,textTransform:"uppercase",fontStyle:"italic"}}>{d.s}</span>
                 </div>
-                <div style={{maxHeight:isOpen?200:0,overflow:"hidden",transition:"max-height 0.5s ease, opacity 0.4s ease",opacity:isOpen?1:0}}>
-                  <p style={{fontFamily:F,fontSize:15,color:WARM,lineHeight:1.75,paddingTop:16,paddingLeft:29}}>{d.d}</p>
-                </div>
+                {has&&<div style={{maxHeight:isOpen?220:0,overflow:"hidden",transition:"max-height .6s ease, opacity .5s ease",opacity:isOpen?1:0}}>
+                  <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:16,paddingLeft:50,maxWidth:680}}>{d.d}</p>
+                </div>}
               </div>
-              {i<4&&<div style={{height:1,background:"rgba(184,146,63,0.08)",margin:"0 32px"}}/>}
             </FI>);
           })}
         </div>
-        <div style={{marginTop:48}}>
-          <FI delay={0.5}>
-            <div style={{width:1,height:32,background:"linear-gradient(to bottom,transparent,"+GOLD+")",margin:"0 auto 20px"}}/>
-            <p style={{fontFamily:F,fontSize:12,letterSpacing:".2em",color:LIGHT,textTransform:"uppercase",textAlign:"center",marginBottom:24}}>{t.ft}</p>
+
+        {/* FOR: editorial index, not buttons */}
+        <div style={{marginTop:90}}>
+          <FI type="fade">
+            <p style={{fontFamily:F,fontSize:13,letterSpacing:".4em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginBottom:34}}>{t.ft}</p>
           </FI>
-          <div style={{maxWidth:640,margin:"0 auto",display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"12px"}}>
+          <div style={{maxWidth:900,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",borderTop:"1px solid "+LINE}}>
             {t.fwho.map(function(w,i){
               return (
-                <FI key={i} delay={0.6+i*0.08}>
-                  <div style={{padding:"10px 24px",borderRadius:"40px",border:"1px solid rgba(184,146,63,0.25)",background:"transparent",cursor:"default",transition:"all .4s ease"}}
-                    onMouseEnter={function(e){e.currentTarget.style.background="rgba(184,146,63,0.06)";e.currentTarget.style.borderColor=GOLD;}}
-                    onMouseLeave={function(e){e.currentTarget.style.background="transparent";e.currentTarget.style.borderColor="rgba(184,146,63,0.25)";}}>
-                    <p style={{fontFamily:F,fontSize:13,letterSpacing:".04em",color:GREY,whiteSpace:"nowrap"}}>{w}</p>
+                <FI key={i} delay={0.1+i*0.07} type="fade">
+                  <div style={{padding:"26px 12px",textAlign:"center",borderBottom:"1px solid "+LINE}}>
+                    <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,21px)",fontWeight:400,letterSpacing:".08em",color:CREAM}}>{w}</p>
                   </div>
                 </FI>
               );
@@ -296,52 +366,51 @@ export default function App(){
         </div>
       </section>
 
-      {/* SERVICES: Three pillars */}
-      <section id="services" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,80px)",background:CREAM}}>
+      {/* SERVICES */}
+      <section id="services" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.st)}<GL/></FI>
-        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(18px,2.2vw,22px)",fontWeight:500,color:DARK,textAlign:"center",maxWidth:500,margin:"0 auto 48px"}}>{t.sh}</p></FI>
-        <div style={{maxWidth:800,margin:"0 auto"}}>
+        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM,textAlign:"center",maxWidth:560,margin:"0 auto 64px"}}>{t.sh}</p></FI>
+        <div style={{maxWidth:1080,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"clamp(28px,4vw,56px)"}}>
           {t.svcs.map(function(s,i){
             return (<FI key={i} delay={i*0.15}>
-              <div style={{padding:"36px 0",borderBottom:i<2?"1px solid rgba(184,146,63,0.12)":"none"}}>
-                <h3 style={{fontFamily:F,fontSize:20,fontWeight:400,color:GOLD,letterSpacing:".06em",textAlign:"center"}}>{s.t}</h3>
-                <p style={{fontFamily:F,fontSize:16,color:WARM,lineHeight:1.75,marginTop:14,textAlign:"center",maxWidth:640,margin:"14px auto 0"}}>{s.d}</p>
+              <div style={{borderTop:"1px solid "+GOLD,paddingTop:28,height:"100%"}}>
+                <h3 style={{fontFamily:F,fontSize:"clamp(22px,2.2vw,26px)",fontWeight:400,color:GOLD_L,letterSpacing:".05em"}}>{s.t}</h3>
+                <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,marginTop:18}}>{s.d}</p>
               </div>
             </FI>);
           })}
         </div>
-        <FI delay={0.5}>
-          <p style={{fontFamily:F,fontSize:14,color:LIGHT,fontStyle:"italic",textAlign:"center",marginTop:36,maxWidth:600,margin:"36px auto 0"}}>{t.sn}</p>
+        <FI delay={0.4}>
+          <p style={{fontFamily:F,fontSize:15,color:CREAM_M,fontStyle:"italic",textAlign:"center",maxWidth:620,margin:"64px auto 0",lineHeight:1.7}}>{t.sn}</p>
         </FI>
       </section>
 
-
-      {/* FOUNDER */}
-      <section id="founder" style={{padding:"clamp(50px,6vw,80px) clamp(24px,6vw,80px)",background:CREAM}}>
-        <FI>{S(t.fdt)}<GL/></FI>
-        <FI delay={0.2}>{P(t.fd1)}</FI>
+      {/* FOUNDER: the one paper-warm interlude */}
+      <section id="founder" style={{padding:pad,background:CREAM,color:CHOC}}>
+        <FI>{S(t.fdt,GOLD)}<GL/></FI>
+        <FI delay={0.15}>{P(t.fd1,{color:CHOC,fontSize:"clamp(21px,2.6vw,28px)",lineHeight:1.6,fontWeight:300,maxWidth:800})}</FI>
+        <div style={{height:36}}/>
+        <FI delay={0.2}>{P(t.fd2,{color:"rgba(45,31,18,0.8)"})}</FI>
         <div style={{height:24}}/>
-        <FI delay={0.3}>{P(t.fd2)}</FI>
+        <FI delay={0.25}>{P(t.fd3,{color:"rgba(45,31,18,0.8)"})}</FI>
         <div style={{height:24}}/>
-        <FI delay={0.35}>{P(t.fd3)}</FI>
+        <FI delay={0.3}>{P(t.fd4,{fontStyle:"italic",color:GOLD})}</FI>
         <div style={{height:24}}/>
-        <FI delay={0.4}>{P(t.fd4,{fontStyle:"italic",color:GREY})}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.5}>{P(t.fd5)}</FI>
+        <FI delay={0.35}>{P(t.fd5,{color:"rgba(45,31,18,0.8)"})}</FI>
       </section>
 
       {/* APPROACH */}
-      <section id="approach" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,80px)",background:DARK}}>
+      <section id="approach" style={{padding:pad,background:DEEP}}>
         <FI>{S(t.at)}<GL/></FI>
-        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(18px,2.2vw,22px)",fontWeight:500,color:"rgba(255,255,255,0.7)",textAlign:"center",maxWidth:500,margin:"0 auto 48px"}}>{t.ah}</p></FI>
-        <div style={{maxWidth:700,margin:"0 auto"}}>
+        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM_D,textAlign:"center",maxWidth:560,margin:"0 auto 56px"}}>{t.ah}</p></FI>
+        <div style={{maxWidth:820,margin:"0 auto",borderTop:"1px solid "+LINE}}>
           {t.steps.map(function(s,i){
-            return (<FI key={s.n} delay={i*0.12}>
-              <div style={{display:"flex",gap:24,padding:"28px 0",borderBottom:i<3?"1px solid rgba(184,146,63,0.12)":"none",alignItems:"flex-start"}}>
-                <span style={{fontFamily:F,fontSize:28,fontWeight:300,color:GOLD,flexShrink:0,lineHeight:1}}>{s.n}</span>
+            return (<FI key={s.n} delay={i*0.1} type="fade">
+              <div style={{display:"flex",gap:"clamp(18px,4vw,44px)",padding:"34px 0",borderBottom:"1px solid "+LINE,alignItems:"flex-start"}}>
+                <span style={{fontFamily:F,fontSize:"clamp(38px,5vw,56px)",fontWeight:300,color:GOLD,flexShrink:0,lineHeight:.9,minWidth:"1.5em",opacity:.9}}>{s.n}</span>
                 <div>
-                  <h3 style={{fontFamily:F,fontSize:18,fontWeight:400,color:GOLD,letterSpacing:".06em"}}>{s.t}</h3>
-                  <p style={{fontFamily:F,fontSize:15,color:"rgba(255,255,255,0.5)",lineHeight:1.7,marginTop:8}}>{s.d}</p>
+                  <h3 style={{fontFamily:F,fontSize:"clamp(21px,2.2vw,25px)",fontWeight:400,color:GOLD_L,letterSpacing:".05em"}}>{s.t}</h3>
+                  <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.75,marginTop:10}}>{s.d}</p>
                 </div>
               </div>
             </FI>);
@@ -349,65 +418,66 @@ export default function App(){
         </div>
       </section>
 
-      {/* DISTINCTION */}
-      <section id="distinction" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,80px)",background:CREAM}}>
-        <FI>{S(t.dst)}<GL/></FI>
-        <FI delay={0.2}>{P(t.dsh,{fontSize:"clamp(18px,2.2vw,22px)",fontWeight:500})}</FI>
-        <div style={{height:32}}/>
-        <FI delay={0.3}>{P(t.dsb)}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.4}>{P(t.dsc,{fontStyle:"italic",color:GOLD})}</FI>
+      {/* DISTINCTION: one statement, full presence */}
+      <section id="distinction" style={{minHeight:"84vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:pad,background:"radial-gradient(ellipse at 50% 40%,"+COCOA+" 0%,"+CHOC+" 70%)"}}>
+        <FI type="fade">{S(t.dst)}<GL/></FI>
+        <FI delay={0.2}>
+          <p style={{fontFamily:F,fontSize:"clamp(34px,6.2vw,80px)",fontWeight:300,lineHeight:1.14,color:CREAM,textAlign:"center",maxWidth:1000,margin:"28px auto 0",letterSpacing:"-.005em"}}>{t.dsh}</p>
+        </FI>
+        <div style={{height:56}}/>
+        <FI delay={0.35}>{P(t.dsb,{maxWidth:640})}</FI>
+        <div style={{height:28}}/>
+        <FI delay={0.5}>{P(t.dsc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(19px,2.2vw,24px)"})}</FI>
       </section>
 
-
-      {/* GINKGO */}
-      <section id="symbol" style={{padding:"clamp(60px,8vw,100px) clamp(24px,6vw,80px)",background:CREAM}}>
+      {/* SYMBOL */}
+      <section id="symbol" style={{padding:pad,background:COCOA}}>
         <FI>{S(t.gkt)}<GL/></FI>
-        <div style={{display:"flex",justifyContent:"center",marginBottom:40}}><Img size={80}/></div>
-        <FI delay={0.2}>{P(t.gks1)}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.3}>{P(t.gks2)}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.4}>{P(t.gks3,{fontStyle:"italic",color:GOLD})}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.5}>{P(t.gks4)}</FI>
+        <FI type="scale"><div style={{margin:"20px auto 56px"}}><Mark width="clamp(110px,14vw,170px)"/></div></FI>
+        <FI delay={0.15}>{P(t.gks1)}</FI>
+        <div style={{height:26}}/>
+        <FI delay={0.2}>{P(t.gks2)}</FI>
+        <div style={{height:26}}/>
+        <FI delay={0.25}>{P(t.gks3,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(19px,2.2vw,24px)"})}</FI>
+        <div style={{height:26}}/>
+        <FI delay={0.3}>{P(t.gks4)}</FI>
       </section>
 
       {/* MANIFESTO */}
-      <section style={{padding:"clamp(50px,6vw,80px) 24px",background:DARK,textAlign:"center"}}>
-        <FI>
-          <Img size={70}/>
-          <div style={{marginTop:36,maxWidth:500,margin:"36px auto 0"}}>
+      <section style={{padding:"clamp(90px,11vw,150px) 24px",background:DEEP,textAlign:"center"}}>
+        <FI type="scale">
+          <Mark width="clamp(90px,10vw,120px)"/>
+        </FI>
+        <FI delay={0.2}>
+          <div style={{marginTop:52,maxWidth:640,margin:"52px auto 0"}}>
             {t.gk.map(function(l,i){
-              if(l.t==="")return <div key={i} style={{height:20}}/>;
-              return <p key={i} style={{fontFamily:F,fontSize:l.b?20:17,fontWeight:l.b?500:300,fontStyle:l.b?"normal":"italic",color:l.b?GOLD:"rgba(255,255,255,0.55)",lineHeight:1.8}}>{l.t}</p>;
+              if(l.t==="")return <div key={i} style={{height:26}}/>;
+              return <p key={i} style={{fontFamily:F,fontSize:l.b?"clamp(24px,3.2vw,34px)":"clamp(18px,2vw,22px)",fontWeight:l.b?400:300,fontStyle:l.b?"normal":"italic",color:l.b?GOLD_L:CREAM_D,lineHeight:1.7}}>{l.t}</p>;
             })}
           </div>
         </FI>
       </section>
 
-
       {/* CONTACT */}
-      <section id="contact" style={{padding:"clamp(50px,6vw,80px) 24px",background:CREAM,textAlign:"center"}}>
+      <section id="contact" style={{padding:pad,background:CHOC,textAlign:"center"}}>
         <FI>
-          <Img size={44}/>
-          <h2 style={{fontFamily:F,fontSize:"clamp(24px,3.5vw,36px)",fontWeight:300,color:GOLD,letterSpacing:".15em",textTransform:"uppercase",marginTop:20}}>L'Essence d'Or</h2>
+          <div style={{margin:"0 auto"}}><Mark width="48px" drift={false}/></div>
+          <h2 style={{fontFamily:F,fontSize:"clamp(26px,3.5vw,38px)",fontWeight:300,color:GOLD_L,letterSpacing:".18em",textTransform:"uppercase",marginTop:24}}>L'Essence d'Or</h2>
           <GL/>
-          <p style={{fontFamily:F,fontSize:15,color:GREY,fontStyle:"italic"}}>{t.sig}</p>
-          <div style={{marginTop:40}}>
-  <ContactForm />
-</div>
-
-          <div style={{marginTop:36}}>
-            <a href="mailto:contact@lessencedor.com" style={{fontFamily:F,fontSize:16,color:WARM,textDecoration:"none"}}>contact@lessencedor.com</a>
-            <p style={{fontFamily:F,fontSize:13,color:LIGHT,marginTop:16}}>www.lessencedor.com</p>
+          <p style={{fontFamily:F,fontSize:16,color:CREAM_M,fontStyle:"italic"}}>{t.sig}</p>
+          <div style={{marginTop:44}}>
+            <ContactForm />
           </div>
-          <p style={{fontFamily:F,fontSize:12,color:LIGHT,marginTop:32,fontStyle:"italic"}}>{t.fo}</p>
+          <div style={{marginTop:48}}>
+            <a href="mailto:contact@lessencedor.com" style={{fontFamily:F,fontSize:18,color:CREAM,textDecoration:"none",letterSpacing:".04em"}}>contact@lessencedor.com</a>
+            <p style={{fontFamily:F,fontSize:13,color:CREAM_M,marginTop:16,letterSpacing:".08em"}}>www.lessencedor.com</p>
+          </div>
+          <p style={{fontFamily:F,fontSize:13,color:CREAM_M,marginTop:36,fontStyle:"italic"}}>{t.fo}</p>
         </FI>
       </section>
 
-      <footer style={{padding:16,background:DARK,textAlign:"center"}}>
-        <p style={{fontFamily:F,fontSize:11,color:"rgba(255,255,255,0.25)",letterSpacing:".06em"}}>{t.cr}</p>
+      <footer style={{padding:"18px 16px",background:DEEP,textAlign:"center",borderTop:"1px solid "+LINE}}>
+        <p style={{fontFamily:F,fontSize:12,color:CREAM_M,letterSpacing:".08em"}}>{t.cr}</p>
       </footer>
     </div>
   );
