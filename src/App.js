@@ -79,11 +79,16 @@ const T = {
     ],
 
     fdt:"The Founder",
-    fd1:"Ana Cunha is a luxury strategist and curator of destination experiences operating at the intersection of hospitality, brand ecosystems and experiential design.",
-    fd2:"With advanced education in Luxury Brand Management from ISEG Executive Education and international exposure across leading luxury destinations including Paris, London, Venice, Lake Como and Dubai, her perspective bridges strategic clarity with refined aesthetics and a deep understanding of how luxury is perceived, felt and remembered.",
-    fd3:"Recognised as Best Luxury Event Planner in Portugal at the Luxury Lifestyle Awards 2026, and with multiple international distinctions, her work combines advisory, creative direction and experiential design for high-end hospitality clients and premium brands.",
-    fd4:"Her background in pharmaceutical sciences brings an uncommon dimension to her approach: analytical rigour, precision and structured methodology applied to the art of luxury experiences.",
-    fd5:"L’Essence d’Or is the natural evolution of over a decade of work at the highest level of experiential luxury: a framework that measures what others cannot.",
+    frole:"Founder and Creative Director of Made With Love Events, and the mind behind L’Essence d’Or, The Invisible Measure.",
+    fs:[
+      "Most luxury experiences are well executed. Very few are unforgettable. The difference rarely lies in what can be counted, and almost always in what is felt: a need anticipated, a moment perfectly timed, an atmosphere that feels effortless, the sense of being genuinely considered.",
+      "This conviction was shaped through more than a decade in the events industry with Made With Love, where Ana creates destination weddings, private celebrations and hospitality-led events in Portugal and internationally.",
+      "It has been further informed by executive education in Management of Fashion and Luxury Companies at Università Bocconi and Mastering Luxury Hospitality: Fundamentals to Leadership at EDHEC Business School, alongside masterclasses with international industry leaders.",
+      "This journey led to the creation of L’Essence d’Or, The Invisible Measure: a proprietary methodology conceived to evaluate, elevate and distinguish luxury hospitality through the elements that are not always visible, yet profoundly shape how an experience is perceived, felt and remembered.",
+      "Built around five dimensions, The Seen, The Felt, The Human, The Rooted and The Sustained, L’Essence d’Or brings together confidential, experience-based evaluation, education and a Distinction designed to recognise depth, consistency and qualitative excellence.",
+      "Made With Love brings this philosophy into the world of celebrations. L’Essence d’Or extends it across luxury hospitality, through the service, culture and standards that shape truly memorable experiences."
+    ],
+    fclose:"Across both ventures, Ana’s approach is guided by the belief that true luxury is not defined by excess, but by relevance, coherence, care and the quality of how an experience makes people feel.",
     cta:"Request a Confidential Conversation",
     ce:"For enquiries",
     fo:"Based in Europe, serving excellence worldwide.",
@@ -148,11 +153,16 @@ const T = {
     ],
 
     fdt:"A Fundadora",
-    fd1:"Ana Cunha é uma estratega de luxo e curadora de experiências de destino, operando na intersecção entre hospitalidade, ecossistemas de marca e design experiencial.",
-    fd2:"Com formação avançada em Luxury Brand Management pelo ISEG Executive Education e exposição internacional em destinos de referência como Paris, Londres, Veneza, Lake Como e Dubai, a sua perspectiva combina clareza estratégica com estética refinada e uma compreensão profunda de como o luxo é percebido, sentido e recordado.",
-    fd3:"Reconhecida como Best Luxury Event Planner in Portugal nos Luxury Lifestyle Awards 2026, e com múltiplas distinções internacionais, o seu trabalho combina consultoria, direcção criativa e design experiencial para clientes de hospitalidade de alto nível e marcas premium.",
-    fd4:"A sua formação em ciências farmacêuticas traz uma dimensão invulgar à sua abordagem: rigor analítico, precisão e metodologia estruturada aplicados à arte das experiências de luxo.",
-    fd5:"L’Essence d’Or é a evolução natural de mais de uma década de trabalho ao mais alto nível do luxo experiencial: um framework que mede o que os outros não conseguem.",
+    frole:"Fundadora e Directora Criativa da Made With Love Events, e a mente por detrás de L’Essence d’Or, The Invisible Measure.",
+    fs:[
+      "A maior parte das experiências de luxo é bem executada. Muito poucas são inesquecíveis. A diferença raramente está no que se pode contar, e quase sempre no que se sente: uma necessidade antecipada, um momento no instante certo, uma atmosfera que parece não exigir esforço, a sensação de ser genuinamente considerado.",
+      "Esta convicção formou-se ao longo de mais de uma década no sector dos eventos com a Made With Love, onde Ana cria destination weddings, celebrações privadas e eventos de hospitalidade em Portugal e no estrangeiro.",
+      "Foi aprofundada pela formação executiva em Management of Fashion and Luxury Companies, na Università Bocconi, e em Mastering Luxury Hospitality: Fundamentals to Leadership, na EDHEC Business School, a par de masterclasses com líderes internacionais do sector.",
+      "Este percurso conduziu à criação de L’Essence d’Or, The Invisible Measure: uma metodologia proprietária concebida para avaliar, elevar e distinguir a hospitalidade de luxo através dos elementos que nem sempre são visíveis, mas que moldam profundamente a forma como uma experiência é percebida, sentida e recordada.",
+      "Construída em torno de cinco dimensões, The Seen, The Felt, The Human, The Rooted e The Sustained, L’Essence d’Or reúne avaliação confidencial baseada na experiência, formação e uma Distinction concebida para reconhecer profundidade, consistência e excelência qualitativa.",
+      "A Made With Love leva esta filosofia ao mundo das celebrações. L’Essence d’Or estende-a a toda a hospitalidade de luxo, através do serviço, da cultura e dos padrões que moldam experiências verdadeiramente memoráveis."
+    ],
+    fclose:"Em ambos os projectos, a abordagem de Ana é guiada pela convicção de que o verdadeiro luxo não se define pelo excesso, mas pela relevância, pela coerência, pelo cuidado e pela qualidade daquilo que uma experiência faz as pessoas sentir.",
     cta:"Solicitar uma Conversa Confidencial",
     ce:"Para informações",
     fo:"Sediada na Europa, ao serviço da excelência mundial.",
@@ -347,17 +357,20 @@ export default function App(){
           })}
         </div>
 
-        {/* FOR: editorial index, not buttons */}
+        {/* FOR: thin gold capsules, revealed one by one */}
         <div style={{marginTop:90}}>
           <FI type="fade">
-            <p style={{fontFamily:F,fontSize:13,letterSpacing:".4em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginBottom:34}}>{t.ft}</p>
+            <div style={{width:1,height:34,background:"linear-gradient(to bottom,transparent,"+GOLD+")",margin:"0 auto 22px"}}/>
+            <p style={{fontFamily:F,fontSize:13,letterSpacing:".4em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginBottom:30}}>{t.ft}</p>
           </FI>
-          <div style={{maxWidth:900,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",borderTop:"1px solid "+LINE}}>
+          <div style={{maxWidth:760,margin:"0 auto",display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"14px"}}>
             {t.fwho.map(function(w,i){
               return (
-                <FI key={i} delay={0.1+i*0.07} type="fade">
-                  <div style={{padding:"26px 12px",textAlign:"center",borderBottom:"1px solid "+LINE}}>
-                    <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,21px)",fontWeight:400,letterSpacing:".08em",color:CREAM}}>{w}</p>
+                <FI key={i} delay={0.15+i*0.12}>
+                  <div style={{padding:"11px 26px",borderRadius:40,border:"1px solid rgba(201,165,92,0.55)",background:"rgba(176,136,56,0.04)",transition:"border-color .5s ease, background .5s ease"}}
+                    onMouseEnter={function(e){e.currentTarget.style.borderColor=GOLD_L;e.currentTarget.style.background="rgba(176,136,56,0.10)";}}
+                    onMouseLeave={function(e){e.currentTarget.style.borderColor="rgba(201,165,92,0.55)";e.currentTarget.style.background="rgba(176,136,56,0.04)";}}>
+                    <p style={{fontFamily:F,fontSize:"clamp(15px,1.6vw,17px)",letterSpacing:".06em",color:CREAM,whiteSpace:"nowrap"}}>{w}</p>
                   </div>
                 </FI>
               );
@@ -385,18 +398,32 @@ export default function App(){
         </FI>
       </section>
 
-      {/* FOUNDER: the one paper-warm interlude */}
-      <section id="founder" style={{padding:pad,background:CREAM,color:CHOC}}>
-        <FI>{S(t.fdt,GOLD)}<GL/></FI>
-        <FI delay={0.15}>{P(t.fd1,{color:CHOC,fontSize:"clamp(21px,2.6vw,28px)",lineHeight:1.6,fontWeight:300,maxWidth:800})}</FI>
-        <div style={{height:36}}/>
-        <FI delay={0.2}>{P(t.fd2,{color:"rgba(45,31,18,0.8)"})}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.25}>{P(t.fd3,{color:"rgba(45,31,18,0.8)"})}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.3}>{P(t.fd4,{fontStyle:"italic",color:GOLD})}</FI>
-        <div style={{height:24}}/>
-        <FI delay={0.35}>{P(t.fd5,{color:"rgba(45,31,18,0.8)"})}</FI>
+      {/* FOUNDER: portrait and story, on cocoa */}
+      <section id="founder" style={{padding:pad,background:COCOA}}>
+        <FI>{S(t.fdt)}<GL/></FI>
+        <div style={{maxWidth:1040,margin:"40px auto 0",display:"grid",gridTemplateColumns:mobile?"1fr":"minmax(260px,0.8fr) 1.2fr",gap:mobile?40:"clamp(40px,6vw,88px)",alignItems:"start"}}>
+          <FI type="scale">
+            <div style={{position:mobile?"static":"sticky",top:110,maxWidth:mobile?340:"none",margin:mobile?"0 auto":"0"}}>
+              <div style={{position:"relative",padding:12}}>
+                <div style={{position:"absolute",inset:0,border:"1px solid "+LINE,pointerEvents:"none"}}/>
+                <img src="/founder.jpg" alt="Ana Cunha" style={{display:"block",width:"100%",aspectRatio:"4 / 5",objectFit:"cover"}}/>
+              </div>
+              <p style={{fontFamily:F,fontSize:13,letterSpacing:".3em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginTop:22}}>Ana Cunha</p>
+              <p style={{fontFamily:F,fontSize:14,color:CREAM_M,textAlign:"center",marginTop:8,lineHeight:1.6,fontStyle:"italic"}}>{t.frole}</p>
+            </div>
+          </FI>
+          <div style={{textAlign:"left"}}>
+            {t.fs.map(function(x,i){
+              return <FI key={i} delay={0.1+i*0.08}>
+                <p style={{fontFamily:F,fontSize:i===0?"clamp(21px,2.4vw,27px)":"clamp(17px,1.9vw,19px)",lineHeight:i===0?1.55:1.85,color:i===0?CREAM:CREAM_D,fontWeight:i===0?300:400,marginBottom:i===0?34:22}}>{x}</p>
+              </FI>;
+            })}
+            <FI delay={0.6}>
+              <div style={{width:60,height:1,background:"linear-gradient(90deg,"+GOLD+",transparent)",margin:"12px 0 26px"}}/>
+              <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,20px)",lineHeight:1.75,color:GOLD_L,fontStyle:"italic"}}>{t.fclose}</p>
+            </FI>
+          </div>
+        </div>
       </section>
 
       {/* APPROACH */}
@@ -418,16 +445,16 @@ export default function App(){
         </div>
       </section>
 
-      {/* DISTINCTION: one statement, full presence */}
-      <section id="distinction" style={{minHeight:"84vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:pad,background:"radial-gradient(ellipse at 50% 40%,"+COCOA+" 0%,"+CHOC+" 70%)"}}>
+      {/* DISTINCTION: one statement, held, not shouted */}
+      <section id="distinction" style={{padding:"clamp(90px,11vw,150px) clamp(24px,6vw,80px)",background:"radial-gradient(ellipse at 50% 40%,"+COCOA+" 0%,"+CHOC+" 70%)"}}>
         <FI type="fade">{S(t.dst)}<GL/></FI>
         <FI delay={0.2}>
-          <p style={{fontFamily:F,fontSize:"clamp(34px,6.2vw,80px)",fontWeight:300,lineHeight:1.14,color:CREAM,textAlign:"center",maxWidth:1000,margin:"28px auto 0",letterSpacing:"-.005em"}}>{t.dsh}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(24px,3vw,38px)",fontWeight:300,lineHeight:1.35,color:CREAM,textAlign:"center",maxWidth:560,margin:"24px auto 0"}}>{t.dsh}</p>
         </FI>
-        <div style={{height:56}}/>
-        <FI delay={0.35}>{P(t.dsb,{maxWidth:640})}</FI>
-        <div style={{height:28}}/>
-        <FI delay={0.5}>{P(t.dsc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(19px,2.2vw,24px)"})}</FI>
+        <div style={{height:44}}/>
+        <FI delay={0.35}>{P(t.dsb,{maxWidth:620})}</FI>
+        <div style={{height:26}}/>
+        <FI delay={0.5}>{P(t.dsc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(18px,2vw,22px)"})}</FI>
       </section>
 
       {/* SYMBOL */}

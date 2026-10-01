@@ -1,10 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const GOLD = "#B08838";
 const GOLD_L = "#C9A55C";
 const CREAM = "#FBF6EE";
 const CREAM_M = "rgba(251,246,238,0.55)";
 const F = "'Cormorant Garamond', serif";
+
+const DEEP = "#1F150C";
+const LINE = "rgba(201,165,92,0.45)";
+
+/* Custom select: native dropdowns ignore the palette */
+function Select({ value, onChange, options, placeholder }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const esc = e => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', close); document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', close); document.removeEventListener('keydown', esc); };
+  }, [open]);
+  return (
+    <div ref={ref} style={{ position: 'relative', marginBottom: 26 }}>
+      <button type="button" onClick={() => setOpen(!open)} aria-haspopup="listbox" aria-expanded={open}
+        style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: `1px solid ${GOLD}66`, color: value ? CREAM : CREAM_M, fontFamily: F, fontSize: 18, padding: '10px 0', textAlign: 'left', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span>{value || placeholder}</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .3s' }}><path d="M1 1l5 5 5-5" fill="none" stroke={GOLD_L} strokeWidth="1.2"/></svg>
+      </button>
+      {open && (
+        <ul role="listbox" style={{ position: 'absolute', left: 0, right: 0, top: '100%', zIndex: 20, margin: 0, padding: '6px 0', listStyle: 'none', background: DEEP, border: `1px solid ${LINE}`, boxShadow: '0 18px 40px rgba(0,0,0,0.45)' }}>
+          {options.map(o => (
+            <li key={o} role="option" aria-selected={value === o} onClick={() => { onChange(o); setOpen(false); }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(176,136,56,0.14)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = value === o ? 'rgba(176,136,56,0.10)' : 'transparent'; }}
+              style={{ padding: '12px 16px', fontFamily: F, fontSize: 17, color: value === o ? GOLD_L : CREAM, cursor: 'pointer', background: value === o ? 'rgba(176,136,56,0.10)' : 'transparent', transition: 'background .25s' }}>
+              {o}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', interest: '', message: '' });
@@ -63,13 +100,8 @@ export default function ContactForm() {
         </div>
         <div style={{ flex: '1 1 220px' }}>
           <label style={label}>Area of Interest</label>
-          <select style={field} name="interest" value={form.interest} onChange={handle}>
-            <option value="">Select</option>
-            <option value="Evaluation & Distinction">Evaluation & Distinction</option>
-            <option value="Consulting">Consulting</option>
-            <option value="The Sense">The Sense</option>
-            <option value="Other">Other</option>
-          </select>
+          <Select value={form.interest} onChange={v => setForm({ ...form, interest: v })} placeholder="Select"
+            options={['Evaluation & Distinction', 'Consulting', 'The Sense', 'Other']} />
         </div>
       </div>
       <label style={label}>Message *</label>
