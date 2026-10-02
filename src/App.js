@@ -10,7 +10,7 @@ const GOLD_L = "#C9A55C";    // gold for text on dark
 const CREAM = "#FBF6EE";
 const CREAM_D = "rgba(251,246,238,0.74)";
 const CREAM_M = "rgba(251,246,238,0.5)";
-const LINE = "rgba(176,136,56,0.28)";
+const HAIR = "rgba(251,246,238,0.13)";
 const F = "'Cormorant Garamond', serif";
 
 const PRERENDER = typeof window === "undefined";
@@ -198,7 +198,7 @@ function FI({children,delay,type}){
 }
 
 /* Hairline with gold fade */
-function GL({w}){return <div style={{display:"flex",justifyContent:"center",margin:"28px 0"}}><div style={{width:w||80,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)"}}/></div>;}
+function GL({w}){return <div style={{display:"flex",justifyContent:"center",margin:"26px 0"}}><div style={{width:w||56,height:1,background:"linear-gradient(90deg,transparent,rgba(176,136,56,0.7),transparent)"}}/></div>;}
 
 /* Matte gold foil applied to the vector logo via CSS mask */
 function Foil({src,ratio,width,label,drift}){
@@ -234,24 +234,24 @@ function Dimensions({dims,mobile}){
     var r=e.currentTarget.getBoundingClientRect();
     setGlow({x:Math.round((e.clientX-r.left)/r.width*100),y:Math.round((e.clientY-r.top)/r.height*100)});
   };
-  var glowBg=function(on){return on?"radial-gradient(circle at "+glow.x+"% "+glow.y+"%, rgba(201,165,92,0.18) 0%, rgba(201,165,92,0.05) 32%, transparent 60%), "+COCOA:"transparent";};
+  var glowBg=function(on){return on?"radial-gradient(circle at "+glow.x+"% "+glow.y+"%, rgba(201,165,92,0.12) 0%, rgba(201,165,92,0.04) 32%, transparent 60%), "+COCOA:"transparent";};
 
   if(mobile){
     return (
-      <div ref={ref} style={{maxWidth:820,margin:"48px auto 0",borderTop:"1px solid "+LINE}}>
+      <div ref={ref} style={{maxWidth:820,margin:"48px auto 0",borderTop:"1px solid "+HAIR}}>
         {dims.map(function(d,i){
           var on=active===i;
           return (
             <div key={d.n} role="button" tabIndex={0} onClick={function(){pick(on?-1:i);}} onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(on?-1:i);}}}
-              style={{borderBottom:"1px solid "+LINE,padding:"22px 18px",background:on?"linear-gradient(180deg,rgba(201,165,92,0.10),rgba(201,165,92,0.02)), "+COCOA:"transparent",transition:"background .6s ease",cursor:"pointer"}}>
+              style={{borderBottom:"1px solid "+HAIR,padding:"22px 18px",background:on?"linear-gradient(180deg,rgba(201,165,92,0.10),rgba(201,165,92,0.02)), "+COCOA:"transparent",transition:"background .6s ease",cursor:"pointer"}}>
               <div style={{display:"flex",alignItems:"baseline",gap:18}}>
-                <span style={{fontFamily:F,fontSize:15,letterSpacing:".2em",color:GOLD_L,minWidth:28}}>{d.n}</span>
-                <span style={{fontFamily:F,fontSize:26,fontWeight:300,color:on?GOLD_L:CREAM,transition:"color .4s"}}>{d.nm}</span>
+                <span style={{fontFamily:F,fontSize:15,letterSpacing:".2em",color:GOLD,minWidth:28}}>{d.n}</span>
+                <span style={{fontFamily:F,fontSize:26,fontWeight:300,color:CREAM,transition:"color .4s"}}>{d.nm}</span>
               </div>
               <div style={{fontFamily:F,fontSize:12,letterSpacing:".18em",textTransform:"uppercase",color:CREAM_M,marginTop:6,paddingLeft:46,fontStyle:"italic"}}>{d.s}</div>
               <div style={{maxHeight:on?520:0,overflow:"hidden",transition:"max-height .8s ease, opacity .5s ease",opacity:on?1:0}}>
                 <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:14,paddingLeft:46}}>{d.d}</p>
-                {d.v&&<p style={{fontFamily:F,fontSize:16,color:GOLD_L,fontStyle:"italic",lineHeight:1.7,paddingTop:12,paddingLeft:46}}>{d.v}</p>}
+                {d.v&&<p style={{fontFamily:F,fontSize:16,color:CREAM_D,fontStyle:"italic",lineHeight:1.7,paddingTop:12,paddingLeft:46}}>{d.v}</p>}
               </div>
             </div>
           );
@@ -261,14 +261,14 @@ function Dimensions({dims,mobile}){
   }
 
   return (
-    <div ref={ref} onMouseLeave={function(){}} style={{maxWidth:1120,margin:"56px auto 0",display:"flex",height:"clamp(520px,64vh,660px)",borderTop:"1px solid "+LINE,borderBottom:"1px solid "+LINE}}>
+    <div ref={ref} onMouseLeave={function(){}} style={{maxWidth:1120,margin:"56px auto 0",display:"flex",height:"clamp(520px,64vh,660px)",borderTop:"1px solid "+HAIR,borderBottom:"1px solid "+HAIR}}>
       {dims.map(function(d,i){
         var on=active===i;
         return (
           <div key={d.n} role="button" tabIndex={0} aria-expanded={on}
             onMouseEnter={function(){pick(i);}} onMouseMove={on?move:undefined} onFocus={function(){pick(i);}}
             onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}}}
-            style={{flex:on?"3.4 1 0":"1 1 0",position:"relative",overflow:"hidden",cursor:"pointer",borderRight:i<dims.length-1?"1px solid "+LINE:"none",background:glowBg(on),transition:"flex .9s cubic-bezier(.2,.7,.2,1), background .7s ease",outline:"none"}}>
+            style={{flex:on?"3.4 1 0":"1 1 0",position:"relative",overflow:"hidden",cursor:"pointer",borderRight:i<dims.length-1?"1px solid "+HAIR:"none",background:glowBg(on),transition:"flex .9s cubic-bezier(.2,.7,.2,1), background .7s ease",outline:"none"}}>
             {/* numeral */}
             <span style={{position:"absolute",top:28,left:28,fontFamily:F,fontSize:on?"clamp(44px,5vw,64px)":22,fontWeight:300,color:GOLD,opacity:on?.9:.7,letterSpacing:".1em",lineHeight:1,transition:"font-size .9s cubic-bezier(.2,.7,.2,1), opacity .5s"}}>{d.n}</span>
             {/* spine label (closed) */}
@@ -277,11 +277,11 @@ function Dimensions({dims,mobile}){
             </div>
             {/* open content */}
             <div style={{position:"absolute",left:0,right:0,bottom:0,padding:"0 34px 34px",opacity:on?1:0,transform:on?"translateY(0)":"translateY(14px)",transition:"opacity .7s ease .25s, transform .8s cubic-bezier(.2,.7,.2,1) .25s",pointerEvents:on?"auto":"none"}}>
-              <div style={{fontFamily:F,fontSize:12,letterSpacing:".3em",textTransform:"uppercase",color:GOLD_L,marginBottom:10}}>{d.s}</div>
+              <div style={{fontFamily:F,fontSize:12,letterSpacing:".3em",textTransform:"uppercase",color:CREAM_M,marginBottom:10}}>{d.s}</div>
               <h3 style={{fontFamily:F,fontSize:"clamp(30px,3.2vw,42px)",fontWeight:300,color:CREAM,lineHeight:1.1,whiteSpace:"nowrap"}}>{d.nm}</h3>
               <div style={{width:48,height:1,background:"linear-gradient(90deg,"+GOLD+",transparent)",margin:"18px 0 16px"}}/>
               <p style={{fontFamily:F,fontSize:"clamp(16px,1.35vw,19px)",color:CREAM_D,lineHeight:1.75,maxWidth:460}}>{d.d}</p>
-              {d.v&&<p style={{fontFamily:F,fontSize:"clamp(15px,1.25vw,18px)",color:GOLD_L,fontStyle:"italic",lineHeight:1.7,maxWidth:460,marginTop:18}}>{d.v}</p>}
+              {d.v&&<p style={{fontFamily:F,fontSize:"clamp(15px,1.25vw,18px)",color:CREAM_D,fontStyle:"italic",lineHeight:1.7,maxWidth:460,marginTop:18}}>{d.v}</p>}
             </div>
           </div>
         );
@@ -290,10 +290,6 @@ function Dimensions({dims,mobile}){
   );
 }
 
-/* A small gold point: hollow when closed, filled when open */
-function Dot({on}){
-  return <span aria-hidden="true" style={{display:"inline-block",width:7,height:7,borderRadius:"50%",border:"1px solid "+GOLD_L,background:on?GOLD_L:"transparent",flexShrink:0,opacity:on?1:.7,transform:on?"scale(1.15)":"scale(1)",transition:"background .4s ease, transform .4s ease, opacity .3s"}}/>;
-}
 /* The Approach: four steps on one line. Hover, tap or wait; one step is lit at a time. */
 function Approach({steps,mobile}){
   const [active,setActive]=useState(0);
@@ -317,7 +313,7 @@ function Approach({steps,mobile}){
               style={{padding:"18px 0",cursor:"pointer",outline:"none"}}>
               <div style={{display:"flex",alignItems:"center",gap:18}}>
                 <span style={{fontFamily:F,fontSize:30,fontWeight:300,color:GOLD,lineHeight:1,minWidth:"1.5em",opacity:on?1:.6,transition:"opacity .4s"}}>{x.n}</span>
-                <h3 style={{fontFamily:F,fontSize:24,fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",transition:"color .4s"}}>{x.t}</h3>
+                <h3 style={{fontFamily:F,fontSize:24,fontWeight:300,color:CREAM,letterSpacing:".04em",transition:"color .4s"}}>{x.t}</h3>
               </div>
               <div style={{maxHeight:on?260:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
                 <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:12,paddingLeft:"calc(1.5em + 18px)"}}>{x.d}</p>
@@ -333,7 +329,7 @@ function Approach({steps,mobile}){
   return (
     <div ref={ref} style={{maxWidth:960,margin:"24px auto 0"}}>
       {/* the line and the points */}
-      <div style={{position:"relative",height:1,background:"linear-gradient(90deg,transparent,"+LINE+" 12%,"+LINE+" 88%,transparent)",margin:"0 "+(100/(n*2))+"%"}}>
+      <div style={{position:"relative",height:1,background:"linear-gradient(90deg,transparent,"+HAIR+" 12%,"+HAIR+" 88%,transparent)",margin:"0 "+(100/(n*2))+"%"}}>
         {steps.map(function(x,i){
           var on=active===i;
           var left=(i/(n-1))*100;
@@ -349,7 +345,7 @@ function Approach({steps,mobile}){
               onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}}}
               style={{textAlign:"center",cursor:"pointer",padding:"8px 10px",outline:"none"}}>
               <div style={{fontFamily:F,fontSize:"clamp(40px,4.6vw,60px)",fontWeight:300,color:GOLD,lineHeight:1,opacity:on?1:.42,transform:on?"translateY(0)":"translateY(4px)",transition:"opacity .5s ease, transform .6s ease"}}>{x.n}</div>
-              <div style={{fontFamily:F,fontSize:"clamp(13px,1.2vw,15px)",letterSpacing:".24em",textTransform:"uppercase",color:on?GOLD_L:CREAM_M,marginTop:14,transition:"color .4s"}}>{x.t}</div>
+              <div style={{fontFamily:F,fontSize:"clamp(13px,1.2vw,15px)",letterSpacing:".24em",textTransform:"uppercase",color:on?CREAM:CREAM_M,marginTop:14,transition:"color .4s"}}>{x.t}</div>
             </div>
           );
         })}
@@ -418,7 +414,7 @@ export default function App(){
 
 
   var go=function(id){setMenu(false);var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth"});};
-  var S=function(text,color){return <h2 style={{fontFamily:F,fontSize:"clamp(28px,4vw,42px)",fontWeight:300,color:color||GOLD_L,letterSpacing:".15em",textAlign:"center",textTransform:"uppercase"}}>{text}</h2>;};
+  var S=function(text,color){return <h2 style={{fontFamily:F,fontSize:"clamp(24px,3.2vw,34px)",fontWeight:300,color:color||CREAM,letterSpacing:".18em",textAlign:"center",textTransform:"uppercase"}}>{text}</h2>;};
   var P=function(text,extra){return <p style={Object.assign({},{fontFamily:F,fontSize:"clamp(17px,2vw,20px)",lineHeight:1.85,color:CREAM_D,maxWidth:680,margin:"0 auto",textAlign:"center"},extra||{})}>{text}</p>;};
 
   var pad="clamp(70px,9vw,120px) clamp(24px,6vw,80px)";
@@ -439,14 +435,14 @@ export default function App(){
       {splash&&<div style={{position:"fixed",inset:0,background:DEEP,zIndex:9999,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:24,animation:PRERENDER?"sf .7s ease 1.2s forwards":"none"}}>
         <div style={{width:"clamp(220px,40vw,360px)",animation:"sl 1.4s ease forwards"}}><Logo width="100%" drift={false}/></div>
         <div style={{marginTop:"clamp(44px,7vh,72px)",textAlign:"center",animation:"fu 1.2s ease 1.1s both"}}>
-          <button onClick={function(){enter(true);}} style={{background:"none",border:"1px solid rgba(201,165,92,0.55)",color:GOLD_L,fontFamily:F,fontSize:14,letterSpacing:".38em",textTransform:"uppercase",padding:"16px 44px 15px 48px",cursor:"pointer"}}>{t.enter}</button>
+          <button onClick={function(){enter(true);}} style={{background:"none",border:"1px solid rgba(251,246,238,0.45)",color:CREAM,fontFamily:F,fontSize:14,letterSpacing:".38em",textTransform:"uppercase",padding:"16px 44px 15px 48px",cursor:"pointer"}}>{t.enter}</button>
           <p style={{fontFamily:F,fontSize:12,letterSpacing:".2em",textTransform:"uppercase",color:CREAM_M,marginTop:14}}>{t.withSound}</p>
           <button onClick={function(){enter(false);}} style={{background:"none",border:"none",color:CREAM_M,fontFamily:F,fontSize:13,fontStyle:"italic",cursor:"pointer",marginTop:26,textDecoration:"underline",textUnderlineOffset:4,textDecorationColor:"rgba(251,246,238,0.25)"}}>{t.silence}</button>
         </div>
       </div>}
 
       {/* NAV */}
-      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:(sc||menu)?"rgba(31,21,12,0.92)":"transparent",backdropFilter:sc?"blur(14px)":"none",WebkitBackdropFilter:sc?"blur(14px)":"none",borderBottom:sc?"1px solid "+LINE:"1px solid transparent",transition:"all .5s",padding:sc?"10px 24px":"22px 24px"}}>
+      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:(sc||menu)?"rgba(31,21,12,0.92)":"transparent",backdropFilter:sc?"blur(14px)":"none",WebkitBackdropFilter:sc?"blur(14px)":"none",borderBottom:sc?"1px solid "+HAIR:"1px solid transparent",transition:"all .5s",padding:sc?"10px 24px":"22px 24px"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
           <button onClick={function(){go("home")}} aria-label="Home" style={{background:"none",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
             <div style={{width:30}}><Mark width="100%" drift={false}/></div>
@@ -459,15 +455,15 @@ export default function App(){
               })}
             </div>}
             {mobile&&<button onClick={function(){setMenu(!menu)}} aria-label="Menu" style={{background:"none",border:"none",cursor:"pointer",padding:"8px 6px",display:"flex",flexDirection:"column",gap:6}}>
-              <span style={{display:"block",width:22,height:1,background:GOLD_L,transform:menu?"translateY(3.5px) rotate(45deg)":"none",transition:"transform .3s"}}/>
-              <span style={{display:"block",width:22,height:1,background:GOLD_L,transform:menu?"translateY(-3.5px) rotate(-45deg)":"none",transition:"transform .3s"}}/>
+              <span style={{display:"block",width:22,height:1,background:CREAM_D,transform:menu?"translateY(3.5px) rotate(45deg)":"none",transition:"transform .3s"}}/>
+              <span style={{display:"block",width:22,height:1,background:CREAM_D,transform:menu?"translateY(-3.5px) rotate(-45deg)":"none",transition:"transform .3s"}}/>
             </button>}
             <button onClick={toggleSound} aria-label={t.sound} aria-pressed={sound} title={t.sound} style={{background:"none",border:"none",cursor:"pointer",padding:"6px 8px",display:"flex",alignItems:"flex-end",gap:3,height:28,opacity:sound?1:.5,transition:"opacity .3s"}}>
               {[0,1,2].map(function(i){return <span key={i} style={{display:"block",width:2,height:sound?14:6,background:GOLD_L,transformOrigin:"bottom",animation:sound?"eq "+(0.9+i*0.25)+"s ease-in-out "+(i*0.15)+"s infinite alternate":"none"}}/>;})}
             </button>
-            <div style={{display:"flex",gap:2,borderLeft:"1px solid "+LINE,paddingLeft:12}}>
-              <button onClick={function(){setLang("en")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="en"?GOLD_L:CREAM_M,borderBottom:lang==="en"?"1px solid "+GOLD_L:"1px solid transparent"}}>EN</button>
-              <button onClick={function(){setLang("pt")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="pt"?GOLD_L:CREAM_M,borderBottom:lang==="pt"?"1px solid "+GOLD_L:"1px solid transparent"}}>PT</button>
+            <div style={{display:"flex",gap:2,borderLeft:"1px solid "+HAIR,paddingLeft:12}}>
+              <button onClick={function(){setLang("en")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="en"?CREAM:CREAM_M,borderBottom:lang==="en"?"1px solid rgba(251,246,238,0.6)":"1px solid transparent"}}>EN</button>
+              <button onClick={function(){setLang("pt")}} style={{fontFamily:F,fontSize:12,cursor:"pointer",padding:"4px 8px",border:"none",background:"none",color:lang==="pt"?CREAM:CREAM_M,borderBottom:lang==="pt"?"1px solid rgba(251,246,238,0.6)":"1px solid transparent"}}>PT</button>
             </div>
           </div>
         </div>
@@ -497,7 +493,7 @@ export default function App(){
           <p style={{fontFamily:F,fontSize:"clamp(12px,1.5vw,15px)",letterSpacing:".32em",color:CREAM_D,textTransform:"uppercase"}}>{t.tag}</p>
         </div>
         <div style={{position:"absolute",bottom:34,animation:"br 2.8s ease infinite"}}>
-          <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={GOLD_L} strokeWidth="1" opacity=".6"/><circle cx="10" cy="10" r="2" fill={GOLD_L} opacity=".8"/></svg>
+          <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={CREAM} strokeWidth="1" opacity=".45"/><circle cx="10" cy="10" r="2" fill={CREAM} opacity=".6"/></svg>
         </div>
       </section>
 
@@ -512,7 +508,7 @@ export default function App(){
         <div style={{height:24}}/>
         <FI delay={0.3}>{P(t.ab4)}</FI>
         <div style={{height:36}}/>
-        <FI delay={0.35}>{P(t.vc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(16px,1.8vw,19px)"})}</FI>
+        <FI delay={0.35}>{P(t.vc,{fontStyle:"italic",color:CREAM_D,fontSize:"clamp(16px,1.8vw,19px)"})}</FI>
       </section>
 
       {/* DIMENSIONS */}
@@ -523,16 +519,16 @@ export default function App(){
         {/* FOR: thin gold capsules, revealed one by one */}
         <div style={{marginTop:90}}>
           <FI type="fade">
-            <div style={{width:1,height:34,background:"linear-gradient(to bottom,transparent,"+GOLD+")",margin:"0 auto 22px"}}/>
-            <p style={{fontFamily:F,fontSize:13,letterSpacing:".4em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginBottom:30}}>{t.ft}</p>
+            <div style={{width:1,height:34,background:"linear-gradient(to bottom,transparent,rgba(176,136,56,0.6))",margin:"0 auto 22px"}}/>
+            <p style={{fontFamily:F,fontSize:13,letterSpacing:".4em",color:CREAM_M,textTransform:"uppercase",textAlign:"center",marginBottom:30}}>{t.ft}</p>
           </FI>
           <div style={{maxWidth:760,margin:"0 auto",display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"14px"}}>
             {t.fwho.map(function(w,i){
               return (
                 <FI key={i} delay={0.15+i*0.12}>
-                  <div style={{padding:"11px 26px",borderRadius:40,border:"1px solid rgba(201,165,92,0.55)",background:"rgba(176,136,56,0.04)",transition:"border-color .5s ease, background .5s ease"}}
-                    onMouseEnter={function(e){e.currentTarget.style.borderColor=GOLD_L;e.currentTarget.style.background="rgba(176,136,56,0.10)";}}
-                    onMouseLeave={function(e){e.currentTarget.style.borderColor="rgba(201,165,92,0.55)";e.currentTarget.style.background="rgba(176,136,56,0.04)";}}>
+                  <div style={{padding:"11px 26px",borderRadius:40,border:"1px solid rgba(251,246,238,0.22)",background:"transparent",transition:"border-color .5s ease, background .5s ease"}}
+                    onMouseEnter={function(e){e.currentTarget.style.borderColor="rgba(251,246,238,0.5)";}}
+                    onMouseLeave={function(e){e.currentTarget.style.borderColor="rgba(251,246,238,0.22)";}}>
                     <p style={{fontFamily:F,fontSize:"clamp(15px,1.6vw,17px)",letterSpacing:".06em",color:CREAM,whiteSpace:"nowrap"}}>{w}</p>
                   </div>
                 </FI>
@@ -550,15 +546,15 @@ export default function App(){
           {t.svcs.map(function(x,i){
             var on=openSvc===i||PRERENDER;
             return (<FI key={i} delay={0.1+i*0.1} type="fade">
-              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenSvc(on&&!PRERENDER?-1:i);}} onMouseEnter={function(){if(!mobile)setOpenSvc(i);}}
+              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenSvc(on&&!PRERENDER?-1:i);}}
                 onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpenSvc(on?-1:i);}}}
                 className="rv" style={{cursor:"pointer",padding:"22px 0",textAlign:"center",outline:"none"}}>
-                <div style={{display:"inline-flex",alignItems:"center",gap:16}}>
-                  <h3 style={{fontFamily:F,fontSize:"clamp(26px,3vw,38px)",fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",transition:"color .4s ease"}}>{x.t}</h3>
-                  <Dot on={on}/>
+                <div style={{display:"inline-flex",alignItems:"center"}}>
+                  <h3 style={{fontFamily:F,fontSize:"clamp(26px,3vw,38px)",fontWeight:300,color:CREAM,letterSpacing:".04em",transition:"color .4s ease"}}>{x.t}</h3>
+                  
                 </div>
                 <div style={{maxHeight:on?300:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
-                  <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)",margin:"18px auto 18px"}}/>
+                  <div style={{height:18}}/>
                   <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",color:CREAM_D,lineHeight:1.8,maxWidth:600,margin:"0 auto"}}>{x.d}</p>
                 </div>
               </div>
@@ -577,10 +573,10 @@ export default function App(){
           <FI type="scale">
             <div style={{position:mobile?"static":"sticky",top:110,maxWidth:mobile?340:"none",margin:mobile?"0 auto":"0"}}>
               <div style={{position:"relative",padding:12}}>
-                <div style={{position:"absolute",inset:0,border:"1px solid "+LINE,pointerEvents:"none"}}/>
+                <div style={{position:"absolute",inset:0,border:"1px solid "+HAIR,pointerEvents:"none"}}/>
                 <img src="/founder.jpg" alt="Ana Cunha" style={{display:"block",width:"100%",aspectRatio:"4 / 5",objectFit:"cover"}}/>
               </div>
-              <p style={{fontFamily:F,fontSize:13,letterSpacing:".3em",color:GOLD_L,textTransform:"uppercase",textAlign:"center",marginTop:22}}>Ana Cunha</p>
+              <p style={{fontFamily:F,fontSize:13,letterSpacing:".3em",color:CREAM,textTransform:"uppercase",textAlign:"center",marginTop:22}}>Ana Cunha</p>
               <p style={{fontFamily:F,fontSize:14,color:CREAM_M,textAlign:"center",marginTop:8,lineHeight:1.6,fontStyle:"italic"}}>{t.frole}</p>
             </div>
           </FI>
@@ -591,8 +587,8 @@ export default function App(){
               </FI>;
             })}
             <FI delay={0.6}>
-              <div style={{width:60,height:1,background:"linear-gradient(90deg,"+GOLD+",transparent)",margin:"12px 0 26px"}}/>
-              <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,20px)",lineHeight:1.75,color:GOLD_L,fontStyle:"italic"}}>{t.fclose}</p>
+              <div style={{height:10}}/>
+              <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,20px)",lineHeight:1.75,color:CREAM_D,fontStyle:"italic"}}>{t.fclose}</p>
             </FI>
           </div>
         </div>
@@ -628,7 +624,7 @@ export default function App(){
           {t.dsr.map(function(x,i){return <p key={i} style={{fontFamily:F,fontSize:"clamp(14px,1.4vw,16px)",color:CREAM_M,textAlign:"center",lineHeight:1.9,letterSpacing:".03em"}}>{x}</p>;})}
         </FI>
         <div style={{height:30}}/>
-        <FI delay={0.55}>{P(t.dsc,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(18px,2vw,22px)"})}</FI>
+        <FI delay={0.55}>{P(t.dsc,{fontStyle:"italic",color:CREAM,fontSize:"clamp(18px,2vw,22px)"})}</FI>
       </section>
 
       {/* SYMBOL */}
@@ -639,7 +635,7 @@ export default function App(){
         <div style={{height:26}}/>
         <FI delay={0.2}>{P(t.gks2)}</FI>
         <div style={{height:26}}/>
-        <FI delay={0.25}>{P(t.gks3,{fontStyle:"italic",color:GOLD_L,fontSize:"clamp(19px,2.2vw,24px)"})}</FI>
+        <FI delay={0.25}>{P(t.gks3,{fontStyle:"italic",color:CREAM_D,fontSize:"clamp(19px,2.2vw,24px)"})}</FI>
         <div style={{height:26}}/>
         <FI delay={0.3}>{P(t.gks4)}</FI>
       </section>
@@ -653,7 +649,7 @@ export default function App(){
           <div style={{marginTop:52,maxWidth:640,margin:"52px auto 0"}}>
             {t.gk.map(function(l,i){
               if(l.t==="")return <div key={i} style={{height:26}}/>;
-              return <p key={i} style={{fontFamily:F,fontSize:l.b?"clamp(24px,3.2vw,34px)":"clamp(18px,2vw,22px)",fontWeight:l.b?400:300,fontStyle:l.b?"normal":"italic",color:l.b?GOLD_L:CREAM_D,lineHeight:1.7}}>{l.t}</p>;
+              return <p key={i} style={{fontFamily:F,fontSize:l.b?"clamp(24px,3.2vw,34px)":"clamp(18px,2vw,22px)",fontWeight:l.b?400:300,fontStyle:l.b?"normal":"italic",color:l.b?CREAM:CREAM_D,lineHeight:1.7}}>{l.t}</p>;
             })}
           </div>
         </FI>
@@ -663,7 +659,7 @@ export default function App(){
       <section id="contact" style={{padding:pad,background:CHOC,textAlign:"center"}}>
         <FI>
           <div style={{margin:"0 auto"}}><Mark width="48px" drift={false}/></div>
-          <h2 style={{fontFamily:F,fontSize:"clamp(26px,3.5vw,38px)",fontWeight:300,color:GOLD_L,letterSpacing:".18em",textTransform:"uppercase",marginTop:24}}>L'Essence d'Or</h2>
+          <h2 style={{fontFamily:F,fontSize:"clamp(26px,3.5vw,38px)",fontWeight:300,color:CREAM,letterSpacing:".18em",textTransform:"uppercase",marginTop:24}}>L'Essence d'Or</h2>
           <GL/>
           <p style={{fontFamily:F,fontSize:16,color:CREAM_M,fontStyle:"italic"}}>{t.sig}</p>
           <div style={{marginTop:44}}>
@@ -677,7 +673,7 @@ export default function App(){
         </FI>
       </section>
 
-      <footer style={{padding:"18px 16px",background:DEEP,textAlign:"center",borderTop:"1px solid "+LINE}}>
+      <footer style={{padding:"18px 16px",background:DEEP,textAlign:"center",borderTop:"1px solid rgba(251,246,238,0.08)"}}>
         <p style={{fontFamily:F,fontSize:12,color:CREAM_M,letterSpacing:".08em"}}>{t.cr}</p>
       </footer>
     </div>
