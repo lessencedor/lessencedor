@@ -9,6 +9,19 @@ const F = "'Cormorant Garamond', serif";
 const DEEP = "#1F150C";
 const LINE = "rgba(201,165,92,0.45)";
 
+const TXT = {
+  en: { name:'Name', email:'Email', company:'Property / Company', interest:'Area of Interest', message:'Message',
+        phName:'Your full name', phEmail:'your@email.com', phCompany:'Optional', phSelect:'Select', phMessage:'Tell us about your project or inquiry',
+        send:'Send Inquiry', sending:'Sending...', thanks:'Thank you.', soon:'We will be in touch shortly.',
+        error:'Something went wrong. Please try again or email us directly.',
+        options:['Evaluation & Distinction','Consulting','The Sense','Other'] },
+  pt: { name:'Nome', email:'Email', company:'Propriedade / Empresa', interest:'Área de Interesse', message:'Mensagem',
+        phName:'O seu nome completo', phEmail:'o.seu@email.com', phCompany:'Opcional', phSelect:'Seleccionar', phMessage:'Fale-nos do seu projecto ou pedido',
+        send:'Enviar Pedido', sending:'A enviar...', thanks:'Obrigado.', soon:'Entraremos em contacto em breve.',
+        error:'Algo correu mal. Por favor tente de novo ou envie-nos um email directamente.',
+        options:['Avaliação & Distinction','Consultoria','The Sense','Outro'] }
+};
+
 /* Custom select: native dropdowns ignore the palette */
 function Select({ value, onChange, options, placeholder }) {
   const [open, setOpen] = useState(false);
@@ -43,7 +56,8 @@ function Select({ value, onChange, options, placeholder }) {
   );
 }
 
-export default function ContactForm() {
+export default function ContactForm({ lang }) {
+  const L = TXT[lang] || TXT.en;
   const [form, setForm] = useState({ name: '', email: '', company: '', interest: '', message: '' });
   const [status, setStatus] = useState('idle');
 
@@ -76,8 +90,8 @@ export default function ContactForm() {
 
   if (status === 'success') return (
     <div style={{ textAlign: 'center', padding: '48px 0' }}>
-      <div style={{ fontFamily: F, fontSize: 26, color: GOLD_L, marginBottom: 12 }}>Thank you.</div>
-      <div style={{ fontFamily: "'Arial', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: CREAM_M }}>We will be in touch shortly.</div>
+      <div style={{ fontFamily: F, fontSize: 26, color: GOLD_L, marginBottom: 12 }}>{L.thanks}</div>
+      <div style={{ fontFamily: "'Arial', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: CREAM_M }}>{L.soon}</div>
     </div>
   );
 
@@ -85,32 +99,32 @@ export default function ContactForm() {
     <form onSubmit={submit} style={{ maxWidth: 580, margin: '0 auto', textAlign: 'left' }}>
       <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
         <div style={{ flex: '1 1 220px' }}>
-          <label style={label}>Name *</label>
-          <input style={field} name="name" value={form.name} onChange={handle} placeholder="Your full name" required />
+          <label style={label}>{L.name} *</label>
+          <input style={field} name="name" value={form.name} onChange={handle} placeholder={L.phName} required />
         </div>
         <div style={{ flex: '1 1 220px' }}>
-          <label style={label}>Email *</label>
-          <input style={field} type="email" name="email" value={form.email} onChange={handle} placeholder="your@email.com" required />
+          <label style={label}>{L.email} *</label>
+          <input style={field} type="email" name="email" value={form.email} onChange={handle} placeholder={L.phEmail} required />
         </div>
       </div>
       <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
         <div style={{ flex: '1 1 220px' }}>
-          <label style={label}>Property / Company</label>
-          <input style={field} name="company" value={form.company} onChange={handle} placeholder="Optional" />
+          <label style={label}>{L.company}</label>
+          <input style={field} name="company" value={form.company} onChange={handle} placeholder={L.phCompany} />
         </div>
         <div style={{ flex: '1 1 220px' }}>
-          <label style={label}>Area of Interest</label>
-          <Select value={form.interest} onChange={v => setForm({ ...form, interest: v })} placeholder="Select"
-            options={['Evaluation & Distinction', 'Consulting', 'The Sense', 'Other']} />
+          <label style={label}>{L.interest}</label>
+          <Select value={form.interest} onChange={v => setForm({ ...form, interest: v })} placeholder={L.phSelect}
+            options={L.options} />
         </div>
       </div>
-      <label style={label}>Message *</label>
-      <textarea style={{ ...field, minHeight: 110, resize: 'vertical' }} name="message" value={form.message} onChange={handle} placeholder="Tell us about your project or inquiry" required />
+      <label style={label}>{L.message} *</label>
+      <textarea style={{ ...field, minHeight: 110, resize: 'vertical' }} name="message" value={form.message} onChange={handle} placeholder={L.phMessage} required />
       <div style={{ textAlign: 'center', marginTop: 18 }}>
         <button type="submit" disabled={status === 'loading'} style={{ background: 'transparent', border: `1px solid ${GOLD_L}`, color: GOLD_L, fontFamily: "'Arial', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', padding: '15px 44px', cursor: 'pointer' }}>
-          {status === 'loading' ? 'Sending...' : 'Send Inquiry'}
+          {status === 'loading' ? L.sending : L.send}
         </button>
-        {status === 'error' && <p style={{ color: '#E0A58A', fontFamily: F, fontSize: 15, marginTop: 18 }}>Something went wrong. Please try again or email us directly.</p>}
+        {status === 'error' && <p style={{ color: '#E0A58A', fontFamily: F, fontSize: 15, marginTop: 18 }}>{L.error}</p>}
       </div>
     </form>
   );

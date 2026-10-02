@@ -13,6 +13,7 @@ const CREAM_M = "rgba(251,246,238,0.5)";
 const LINE = "rgba(176,136,56,0.28)";
 const F = "'Cormorant Garamond', serif";
 
+const PRERENDER = typeof window === "undefined";
 const MARK_URL = "/mark.svg";
 const LOGO_URL = "/logo.svg";
 
@@ -102,44 +103,44 @@ const T = {
     watch:"Ver o Filme",
     abt:"O Que Fazemos",
     ab1:"L’Essence d’Or é um programa independente de avaliação e elevação de experiências de luxo. Medimos o que os sistemas tradicionais não medem: a qualidade invisível de uma experiência: como é sentida, sustentada e recordada.",
-    ab2:"Trabalhamos com propriedades e marcas que compreendem que a verdadeira excelência não se define pela infraestrutura, pelo preço ou pela estética, mas pela profundidade da presença, antecipação e cuidado que moldam cada momento.",
+    ab2:"Trabalhamos com propriedades e marcas que compreendem que a verdadeira excelência não se define apenas pela infraestrutura, pelo preço ou pela estética, mas pela profundidade da presença, antecipação e cuidado que moldam cada momento.",
     ab3:"O nosso trabalho abrange três áreas: avaliação qualitativa com base num framework proprietário de cinco dimensões, consultoria confidencial para propriedades que procuram elevação, e programas de formação que transformam equipas a partir de dentro.",
     ab4:"A Distinction de L’Essence d’Or é atribuída a quem demonstra excelência sustentada em todas as dimensões. Não é dada sistematicamente. É conquistada.",
-    vc:"Não procuramos a perfeição. Procuramos presença, consistência e intenção.",
+    vc:"Não é a perfeição que procuramos, mas presença, consistência e intenção.",
     dt:"As Cinco Dimensões",
-    di:"Avaliamos o que os outros não avaliam. Cinco dimensões interligadas que captam não apenas o que é visível, mas o que é sentido e o que permanece.",
+    di:"Avaliamos o que os outros não avaliam. Cinco dimensões interligadas que captam não apenas o que é visível, mas o que é sentido e o que perdura.",
     dims:[
-      {n:"I",nm:"The Seen",s:"Qualidade Visível"},
-      {n:"II",nm:"The Felt",s:"Qualidade Invisível"},
-      {n:"III",nm:"The Human",s:"Qualidade Relacional"},
-      {n:"IV",nm:"The Rooted",s:"Qualidade Cultural"},
-      {n:"V",nm:"The Sustained",s:"Qualidade Sistémica"}
+      {n:"I",nm:"The Seen",s:"Qualidade Visível",d:"Estética, materialidade, mise en place, coerência visual, iluminação, apresentação e fluidez operacional."},
+      {n:"II",nm:"The Felt",s:"Qualidade Invisível",d:"Atmosfera, ritmo, antecipação, calibração sensorial, densidade da experiência e a sensação de cuidado antes de alguma vez ser pedido."},
+      {n:"III",nm:"The Human",s:"Qualidade Relacional",d:"Postura, escuta, leitura do contexto, discrição, empatia calibrada, personalização e elegância em cada interacção."},
+      {n:"IV",nm:"The Rooted",s:"Qualidade Cultural",d:"Autenticidade, sentido de lugar, património, coerência narrativa, sofisticação sem deslocamento."},
+      {n:"V",nm:"The Sustained",s:"Qualidade Sistémica",d:"Padrões internos, consistência, formação contínua, cultura de liderança, resiliência e compromisso com a elevação."}
     ],
     ft:"Para",
-    fwho:["Hotéis de Luxo & Resorts","Aviação Privada","Yachting & Superiates","Clubes Privados","Retiros de Wellness","Destinos Gastronómicos"],
+    fwho:["Hotéis de Luxo & Resorts","Aviação Privada","Yachting & Superiates","Clubes Privados de Membros","Retiros de Wellness","Destinos de Fine Dining"],
     st:"Os Nossos Serviços",
     sh:"Três formas de trabalhar connosco.",
     svcs:[
-      {t:"Avaliação & Distinction",d:"Uma avaliação rigorosa e multi-camada da sua experiência face às cinco dimensões. Combina análise documental, mystery experience anónima, observação on-site e diálogo com equipas. Culmina num relatório confidencial e, quando merecida, na Distinction de L’Essence d’Or."},
-      {t:"Consultoria",d:"Para propriedades e marcas que aspiram à elevação mas não estão ainda prontas para avaliação formal. Trabalhamos com a liderança para identificar lacunas, redesenhar a filosofia de serviço e construir a cultura interna que sustenta a excelência."},
-      {t:"The Sense",d:"Programas de formação que transformam equipas. De imersões executivas para liderança a workshops sensoriais para equipas operacionais. Não ensinamos pessoas o que fazer. Transformamos a forma como vêem, sentem e respondem."}
+      {t:"Avaliação & Distinction",d:"Uma avaliação rigorosa, em várias camadas, da sua experiência face às cinco dimensões. Combina análise documental, mystery experience anónima, observação no local e diálogo com as equipas. Culmina num relatório confidencial e, quando merecida, na Distinction de L’Essence d’Or."},
+      {t:"Consultoria",d:"Para propriedades e marcas que aspiram à elevação mas não estão ainda prontas para avaliação formal. Trabalhamos lado a lado com a liderança para identificar lacunas, redesenhar a filosofia de serviço e construir a cultura interna que sustenta a excelência."},
+      {t:"The Sense",d:"Programas de formação que transformam equipas. De imersões executivas para liderança a workshops sensoriais para equipas operacionais. Não ensinamos às pessoas o que fazer. Transformamos a forma como vêem, sentem e respondem."}
     ],
-    sn:"O programa de Distinction encontra-se na sua fase inaugural e funciona por convite. Programas de Consultoria e The Sense estão disponíveis mediante contacto.",
+    sn:"O programa de Distinction encontra-se na sua fase inaugural e funciona por convite. Os programas de Consultoria e The Sense estão disponíveis mediante pedido.",
     at:"A Abordagem",
-    ah:"Rigor sob a contenção.",
+    ah:"Rigor sob contenção.",
     steps:[
-      {n:"01",t:"Convite",d:"Começamos pelo alinhamento. Propriedades e experiências são avaliadas quanto à compatibilidade com o Método antes de qualquer avaliação."},
-      {n:"02",t:"Avaliação",d:"Um processo multi-camada que combina análise documental, avaliação experiencial anónima, observação técnica e diálogo estruturado com equipas."},
-      {n:"03",t:"Relatório",d:"Dossier confidencial entregue exclusivamente à liderança: análise por dimensão, reconhecimento de pontos fortes e recomendações concretas de elevação."},
-      {n:"04",t:"Distinction",d:"Atribuída apenas quando a excelência sustentada é confirmada nas cinco dimensões. Nem todos a receberão. A maioria não receberá."}
+      {n:"01",t:"Convite",d:"Começamos pelo alinhamento. Propriedades e experiências são avaliadas quanto à compatibilidade com o Método antes de qualquer avaliação começar."},
+      {n:"02",t:"Avaliação",d:"Um processo em várias camadas que combina análise documental, avaliação experiencial anónima, observação técnica e diálogo estruturado com as equipas."},
+      {n:"03",t:"Relatório",d:"Um dossier confidencial entregue exclusivamente à liderança: análise por dimensão, reconhecimento dos pontos fortes e recomendações concretas de elevação."},
+      {n:"04",t:"Distinction",d:"Atribuída apenas quando a excelência sustentada é confirmada nas cinco dimensões. Nem todos a receberão. A maioria não a receberá."}
     ],
     dst:"A Distinção",
     dsh:"A maior parte do luxo é desenhada. Muito pouco é verdadeiramente compreendido.",
     dsb:"A Distinction de L’Essence d’Or não é atribuída sistematicamente. Só é concedida quando o painel confirma profundidade sustentada nas cinco dimensões.",
     dsc:"A Distinction não se persegue. Reconhece-se.",
     gkt:"O Nosso Símbolo",
-    gks1:"O Ginkgo Biloba tem mais de 200 milhões de anos. É a espécie de árvore mais antiga da Terra. Sobreviveu a eras glaciares, a extinções em massa, a incêndios e a catástrofes que apagaram espécies inteiras. Em Hiroshima, seis árvores de ginkgo a menos de dois quilómetros do epicentro voltaram a brotar na primavera seguinte. Na filosofia oriental, o ginkgo simboliza longevidade, resiliência, esperança e paz interior.",
-    gks2:"A sua folha, dois lóbulos simétricos unidos por um único ponto, encarna o equilíbrio das dualidades: visível e invisível, tangível e sentido, forma e essência. Yin e yang. Não em oposição, mas em harmonia silenciosa.",
+    gks1:"O Ginkgo Biloba tem mais de 200 milhões de anos. A árvore viva mais antiga da Terra. Sobreviveu a eras glaciares, a extinções em massa, a incêndios e a catástrofes que apagaram espécies inteiras. Em Hiroshima, seis árvores de ginkgo a menos de dois quilómetros do epicentro voltaram a brotar na primavera seguinte. Na filosofia oriental, o ginkgo simboliza longevidade, resiliência, esperança e paz interior.",
+    gks2:"A sua folha, dois lóbulos simétricos unidos por um único ponto, encarna o equilíbrio das dualidades: visível e invisível, tangível e sentido, forma e essência. Yin e yang. Não em oposição, mas em harmonia serena.",
     gks3:"No outono, a folha de ginkgo torna-se dourada. O seu momento mais belo é precisamente quando se prepara para se desprender. Não se agarra. Transforma-se.",
     gks4:"É por isso que o ginkgo é o nosso símbolo. Como a excelência que procuramos, não é visível à primeira vista, mas sustenta tudo o que é construído sobre ela.",
     gk:[
@@ -156,16 +157,16 @@ const T = {
     frole:"Fundadora e Directora Criativa da Made With Love Events, e a mente por detrás de L’Essence d’Or, The Invisible Measure.",
     fs:[
       "A maior parte das experiências de luxo é bem executada. Muito poucas são inesquecíveis. A diferença raramente está no que se pode contar, e quase sempre no que se sente: uma necessidade antecipada, um momento no instante certo, uma atmosfera que parece não exigir esforço, a sensação de ser genuinamente considerado.",
-      "Esta convicção formou-se ao longo de mais de uma década no sector dos eventos com a Made With Love, onde Ana cria destination weddings, celebrações privadas e eventos de hospitalidade em Portugal e no estrangeiro.",
+      "Esta convicção formou-se ao longo de mais de uma década no sector dos eventos com a Made With Love, onde Ana cria destination weddings, celebrações privadas e eventos de hospitalidade em Portugal e a nível internacional.",
       "Foi aprofundada pela formação executiva em Management of Fashion and Luxury Companies, na Università Bocconi, e em Mastering Luxury Hospitality: Fundamentals to Leadership, na EDHEC Business School, a par de masterclasses com líderes internacionais do sector.",
       "Este percurso conduziu à criação de L’Essence d’Or, The Invisible Measure: uma metodologia proprietária concebida para avaliar, elevar e distinguir a hospitalidade de luxo através dos elementos que nem sempre são visíveis, mas que moldam profundamente a forma como uma experiência é percebida, sentida e recordada.",
       "Construída em torno de cinco dimensões, The Seen, The Felt, The Human, The Rooted e The Sustained, L’Essence d’Or reúne avaliação confidencial baseada na experiência, formação e uma Distinction concebida para reconhecer profundidade, consistência e excelência qualitativa.",
-      "A Made With Love leva esta filosofia ao mundo das celebrações. L’Essence d’Or estende-a a toda a hospitalidade de luxo, através do serviço, da cultura e dos padrões que moldam experiências verdadeiramente memoráveis."
+      "A Made With Love leva esta filosofia ao mundo das celebrações. L’Essence d’Or estende-a à hospitalidade de luxo, através do serviço, da cultura e dos padrões que moldam experiências verdadeiramente memoráveis."
     ],
     fclose:"Em ambos os projectos, a abordagem de Ana é guiada pela convicção de que o verdadeiro luxo não se define pelo excesso, mas pela relevância, pela coerência, pelo cuidado e pela qualidade daquilo que uma experiência faz as pessoas sentir.",
     cta:"Solicitar uma Conversa Confidencial",
-    ce:"Para informações",
-    fo:"Sediada na Europa, ao serviço da excelência mundial.",
+    ce:"Para pedidos de informação",
+    fo:"Sediada na Europa, ao serviço da excelência em todo o mundo.",
     cr:"© 2026 L’Essence d’Or. Todos os direitos reservados."
   }
 };
@@ -184,7 +185,7 @@ function useInView(ref){
 
 /* Entrance: "rise" (text), "fade" (lines, quiet), "scale" (symbols) */
 function FI({children,delay,type}){
-  const ref=useRef(null);const v=useInView(ref);const d=delay||0;
+  const ref=useRef(null);const v=useInView(ref)||PRERENDER;const d=delay||0;
   const k=type||"rise";
   const hidden = k==="scale" ? "scale(.94)" : k==="fade" ? "none" : "translateY(26px)";
   return <div ref={ref} style={{opacity:v?1:0,transform:v?"none":hidden,transition:"opacity 1.1s ease "+d+"s, transform 1.2s cubic-bezier(.2,.7,.2,1) "+d+"s"}}>{children}</div>;
@@ -208,6 +209,86 @@ function Foil({src,ratio,width,label,drift}){
 const Logo=function(p){return <Foil src={LOGO_URL} ratio="870 / 480" width={p.width} drift={p.drift}/>;};
 const Mark=function(p){return <Foil src={MARK_URL} ratio="400 / 370" width={p.width} drift={p.drift}/>;};
 
+/* The Five Dimensions: vertical panels that open like spines.
+   Desktop: hover/click, glow follows the cursor, slow auto-cycle until touched.
+   Mobile: stacked, tap to open. */
+function Dimensions({dims,mobile}){
+  const [active,setActive]=useState(0);
+  const [auto,setAuto]=useState(true);
+  const [glow,setGlow]=useState({x:50,y:40});
+  const ref=useRef(null);
+  const seen=useInView(ref);
+  useEffect(function(){
+    if(!auto||!seen||mobile)return;
+    var id=setInterval(function(){setActive(function(a){return (a+1)%dims.length;});},4200);
+    return function(){clearInterval(id);};
+  },[auto,seen,mobile,dims.length]);
+  var pick=function(i){setAuto(false);setActive(i);};
+  var move=function(e){
+    var r=e.currentTarget.getBoundingClientRect();
+    setGlow({x:Math.round((e.clientX-r.left)/r.width*100),y:Math.round((e.clientY-r.top)/r.height*100)});
+  };
+  var glowBg=function(on){return on?"radial-gradient(circle at "+glow.x+"% "+glow.y+"%, rgba(201,165,92,0.18) 0%, rgba(201,165,92,0.05) 32%, transparent 60%), "+COCOA:"transparent";};
+
+  if(mobile){
+    return (
+      <div ref={ref} style={{maxWidth:820,margin:"48px auto 0",borderTop:"1px solid "+LINE}}>
+        {dims.map(function(d,i){
+          var on=active===i;
+          return (
+            <div key={d.n} role="button" tabIndex={0} onClick={function(){pick(on?-1:i);}} onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(on?-1:i);}}}
+              style={{borderBottom:"1px solid "+LINE,padding:"22px 18px",background:on?"linear-gradient(180deg,rgba(201,165,92,0.10),rgba(201,165,92,0.02)), "+COCOA:"transparent",transition:"background .6s ease",cursor:"pointer"}}>
+              <div style={{display:"flex",alignItems:"baseline",gap:18}}>
+                <span style={{fontFamily:F,fontSize:15,letterSpacing:".2em",color:GOLD_L,minWidth:28}}>{d.n}</span>
+                <span style={{fontFamily:F,fontSize:26,fontWeight:300,color:on?GOLD_L:CREAM,transition:"color .4s"}}>{d.nm}</span>
+              </div>
+              <div style={{fontFamily:F,fontSize:12,letterSpacing:".18em",textTransform:"uppercase",color:CREAM_M,marginTop:6,paddingLeft:46,fontStyle:"italic"}}>{d.s}</div>
+              <div style={{maxHeight:on?260:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
+                <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:14,paddingLeft:46}}>{d.d}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} onMouseLeave={function(){}} style={{maxWidth:1120,margin:"56px auto 0",display:"flex",height:"clamp(440px,52vh,560px)",borderTop:"1px solid "+LINE,borderBottom:"1px solid "+LINE}}>
+      {dims.map(function(d,i){
+        var on=active===i;
+        return (
+          <div key={d.n} role="button" tabIndex={0} aria-expanded={on}
+            onMouseEnter={function(){pick(i);}} onMouseMove={on?move:undefined} onFocus={function(){pick(i);}}
+            onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}}}
+            style={{flex:on?"3.4 1 0":"1 1 0",position:"relative",overflow:"hidden",cursor:"pointer",borderRight:i<dims.length-1?"1px solid "+LINE:"none",background:glowBg(on),transition:"flex .9s cubic-bezier(.2,.7,.2,1), background .7s ease",outline:"none"}}>
+            {/* numeral */}
+            <span style={{position:"absolute",top:28,left:28,fontFamily:F,fontSize:on?"clamp(44px,5vw,64px)":22,fontWeight:300,color:GOLD,opacity:on?.9:.7,letterSpacing:".1em",lineHeight:1,transition:"font-size .9s cubic-bezier(.2,.7,.2,1), opacity .5s"}}>{d.n}</span>
+            {/* spine label (closed) */}
+            <div style={{position:"absolute",left:0,right:0,bottom:34,display:"flex",justifyContent:"center",opacity:on?0:1,transition:"opacity .35s ease"}}>
+              <span style={{writingMode:"vertical-rl",transform:"rotate(180deg)",fontFamily:F,fontSize:"clamp(17px,1.5vw,21px)",letterSpacing:".2em",color:CREAM_D,textTransform:"uppercase",whiteSpace:"nowrap"}}>{d.nm}</span>
+            </div>
+            {/* open content */}
+            <div style={{position:"absolute",left:0,right:0,bottom:0,padding:"0 34px 34px",opacity:on?1:0,transform:on?"translateY(0)":"translateY(14px)",transition:"opacity .7s ease .25s, transform .8s cubic-bezier(.2,.7,.2,1) .25s",pointerEvents:on?"auto":"none"}}>
+              <div style={{fontFamily:F,fontSize:12,letterSpacing:".3em",textTransform:"uppercase",color:GOLD_L,marginBottom:10}}>{d.s}</div>
+              <h3 style={{fontFamily:F,fontSize:"clamp(30px,3.2vw,42px)",fontWeight:300,color:CREAM,lineHeight:1.1,whiteSpace:"nowrap"}}>{d.nm}</h3>
+              <div style={{width:48,height:1,background:"linear-gradient(90deg,"+GOLD+",transparent)",margin:"18px 0 16px"}}/>
+              <p style={{fontFamily:F,fontSize:"clamp(16px,1.35vw,19px)",color:CREAM_D,lineHeight:1.75,maxWidth:460}}>{d.d}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* Small gold plus that turns into a minus when open */
+function Plus({on}){
+  return <span aria-hidden="true" style={{position:"relative",display:"inline-block",width:12,height:12,flexShrink:0,opacity:on?1:.6,transition:"opacity .3s"}}>
+    <span style={{position:"absolute",left:0,right:0,top:5.5,height:1,background:GOLD_L}}/>
+    <span style={{position:"absolute",top:0,bottom:0,left:5.5,width:1,background:GOLD_L,transform:on?"scaleY(0)":"scaleY(1)",transition:"transform .35s ease"}}/>
+  </span>;
+}
 function useIsMobile(){
   const [m,setM]=useState(typeof window!=="undefined"&&window.innerWidth<900);
   useEffect(()=>{
@@ -223,15 +304,13 @@ export default function App(){
   const [splash,setSplash]=useState(function(){
     try{return !window.sessionStorage.getItem("ld_seen");}catch(e){return true;}
   });
-  const [openDim,setOpenDim]=useState(-1);
   const [menu,setMenu]=useState(false);
+  const [openSvc,setOpenSvc]=useState(-1);
+  const [openStep,setOpenStep]=useState(-1);
   const mobile=useIsMobile();
   const t=T[lang];
 
   useEffect(()=>{
-    var link=document.createElement("link");
-    link.href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap";
-    link.rel="stylesheet";document.head.appendChild(link);
     var h=function(){setSc(window.scrollY>60);};
     window.addEventListener("scroll",h);
     return function(){window.removeEventListener("scroll",h);};
@@ -335,27 +414,7 @@ export default function App(){
       {/* DIMENSIONS */}
       <section id="dimensions" style={{padding:pad,background:COCOA}}>
         <FI>{S(t.dt)}<GL/>{P(t.di)}</FI>
-        <div style={{maxWidth:820,margin:"56px auto 0",borderTop:"1px solid "+LINE}}>
-          {t.dims.map(function(d,i){
-            var isOpen=openDim===i;
-            var has=!!d.d;
-            return (<FI key={d.n} delay={i*0.07} type="fade">
-              <div onClick={function(){if(has)setOpenDim(isOpen?-1:i)}}
-                style={{cursor:has?"pointer":"default",padding:"26px 8px",borderBottom:"1px solid "+LINE,transition:"background .5s ease",background:isOpen?"rgba(176,136,56,0.07)":"transparent"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:16,flexWrap:"wrap"}}>
-                  <div style={{display:"flex",alignItems:"baseline",gap:22}}>
-                    <span style={{fontFamily:F,fontSize:14,letterSpacing:".2em",color:GOLD_L,minWidth:28}}>{d.n}</span>
-                    <span style={{fontFamily:F,fontSize:"clamp(22px,2.6vw,28px)",fontWeight:300,color:isOpen?GOLD_L:CREAM,letterSpacing:".05em",transition:"color .4s"}}>{d.nm}</span>
-                  </div>
-                  <span style={{fontFamily:F,fontSize:13,letterSpacing:".14em",color:CREAM_M,textTransform:"uppercase",fontStyle:"italic"}}>{d.s}</span>
-                </div>
-                {has&&<div style={{maxHeight:isOpen?220:0,overflow:"hidden",transition:"max-height .6s ease, opacity .5s ease",opacity:isOpen?1:0}}>
-                  <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:16,paddingLeft:50,maxWidth:680}}>{d.d}</p>
-                </div>}
-              </div>
-            </FI>);
-          })}
-        </div>
+        <Dimensions dims={t.dims} mobile={mobile}/>
 
         {/* FOR: thin gold capsules, revealed one by one */}
         <div style={{marginTop:90}}>
@@ -379,22 +438,31 @@ export default function App(){
         </div>
       </section>
 
-      {/* SERVICES */}
+      {/* SERVICES: three titles, each opening on click */}
       <section id="services" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.st)}<GL/></FI>
-        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM,textAlign:"center",maxWidth:560,margin:"0 auto 64px"}}>{t.sh}</p></FI>
-        <div style={{maxWidth:1080,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"clamp(28px,4vw,56px)"}}>
-          {t.svcs.map(function(s,i){
-            return (<FI key={i} delay={i*0.15}>
-              <div style={{borderTop:"1px solid "+GOLD,paddingTop:28,height:"100%"}}>
-                <h3 style={{fontFamily:F,fontSize:"clamp(22px,2.2vw,26px)",fontWeight:400,color:GOLD_L,letterSpacing:".05em"}}>{s.t}</h3>
-                <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,marginTop:18}}>{s.d}</p>
+        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM,textAlign:"center",maxWidth:560,margin:"0 auto 48px"}}>{t.sh}</p></FI>
+        <div style={{maxWidth:720,margin:"0 auto"}}>
+          {t.svcs.map(function(x,i){
+            var on=openSvc===i||PRERENDER;
+            return (<FI key={i} delay={0.1+i*0.1} type="fade">
+              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenSvc(on&&!PRERENDER?-1:i);}}
+                onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpenSvc(on?-1:i);}}}
+                style={{cursor:"pointer",padding:"22px 0",textAlign:"center",outline:"none"}}>
+                <div style={{display:"inline-flex",alignItems:"center",gap:16}}>
+                  <h3 style={{fontFamily:F,fontSize:"clamp(26px,3vw,38px)",fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",transition:"color .4s ease"}}>{x.t}</h3>
+                  <Plus on={on}/>
+                </div>
+                <div style={{maxHeight:on?300:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
+                  <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)",margin:"18px auto 18px"}}/>
+                  <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",color:CREAM_D,lineHeight:1.8,maxWidth:600,margin:"0 auto"}}>{x.d}</p>
+                </div>
               </div>
             </FI>);
           })}
         </div>
         <FI delay={0.4}>
-          <p style={{fontFamily:F,fontSize:15,color:CREAM_M,fontStyle:"italic",textAlign:"center",maxWidth:620,margin:"64px auto 0",lineHeight:1.7}}>{t.sn}</p>
+          <p style={{fontFamily:F,fontSize:15,color:CREAM_M,fontStyle:"italic",textAlign:"center",maxWidth:620,margin:"56px auto 0",lineHeight:1.7}}>{t.sn}</p>
         </FI>
       </section>
 
@@ -426,18 +494,24 @@ export default function App(){
         </div>
       </section>
 
-      {/* APPROACH */}
+      {/* APPROACH: four steps, each opening on click */}
       <section id="approach" style={{padding:pad,background:DEEP}}>
         <FI>{S(t.at)}<GL/></FI>
-        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM_D,textAlign:"center",maxWidth:560,margin:"0 auto 56px"}}>{t.ah}</p></FI>
-        <div style={{maxWidth:820,margin:"0 auto",borderTop:"1px solid "+LINE}}>
-          {t.steps.map(function(s,i){
-            return (<FI key={s.n} delay={i*0.1} type="fade">
-              <div style={{display:"flex",gap:"clamp(18px,4vw,44px)",padding:"34px 0",borderBottom:"1px solid "+LINE,alignItems:"flex-start"}}>
-                <span style={{fontFamily:F,fontSize:"clamp(38px,5vw,56px)",fontWeight:300,color:GOLD,flexShrink:0,lineHeight:.9,minWidth:"1.5em",opacity:.9}}>{s.n}</span>
-                <div>
-                  <h3 style={{fontFamily:F,fontSize:"clamp(21px,2.2vw,25px)",fontWeight:400,color:GOLD_L,letterSpacing:".05em"}}>{s.t}</h3>
-                  <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.75,marginTop:10}}>{s.d}</p>
+        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM_D,textAlign:"center",maxWidth:560,margin:"0 auto 40px"}}>{t.ah}</p></FI>
+        <div style={{maxWidth:760,margin:"0 auto"}}>
+          {t.steps.map(function(x,i){
+            var on=openStep===i||PRERENDER;
+            return (<FI key={x.n} delay={i*0.1} type="fade">
+              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenStep(on&&!PRERENDER?-1:i);}}
+                onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpenStep(on?-1:i);}}}
+                style={{cursor:"pointer",padding:"22px 0",outline:"none"}}>
+                <div style={{display:"flex",alignItems:"center",gap:"clamp(18px,4vw,40px)"}}>
+                  <span style={{fontFamily:F,fontSize:"clamp(34px,4.5vw,50px)",fontWeight:300,color:GOLD,lineHeight:1,minWidth:"1.6em",opacity:on?1:.75,transition:"opacity .4s"}}>{x.n}</span>
+                  <h3 style={{fontFamily:F,fontSize:"clamp(24px,2.8vw,34px)",fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",flex:1,transition:"color .4s ease"}}>{x.t}</h3>
+                  <Plus on={on}/>
+                </div>
+                <div style={{maxHeight:on?300:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
+                  <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",color:CREAM_D,lineHeight:1.8,paddingTop:14,paddingLeft:"calc(1.6em * 1.3 + clamp(18px,4vw,40px))",maxWidth:640}}>{x.d}</p>
                 </div>
               </div>
             </FI>);
@@ -493,7 +567,7 @@ export default function App(){
           <GL/>
           <p style={{fontFamily:F,fontSize:16,color:CREAM_M,fontStyle:"italic"}}>{t.sig}</p>
           <div style={{marginTop:44}}>
-            <ContactForm />
+            <ContactForm lang={lang} />
           </div>
           <div style={{marginTop:48}}>
             <a href="mailto:contact@lessencedor.com" style={{fontFamily:F,fontSize:18,color:CREAM,textDecoration:"none",letterSpacing:".04em"}}>contact@lessencedor.com</a>
