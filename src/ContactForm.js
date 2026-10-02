@@ -10,12 +10,12 @@ const DEEP = "#1F150C";
 const LINE = "rgba(201,165,92,0.45)";
 
 const TXT = {
-  en: { name:'Name', email:'Email', company:'Property / Company', interest:'Area of Interest', message:'Message',
+  en: { name:'Name', email:'Email', company:'Property / Brand', interest:'Area of Interest', message:'Message',
         phName:'Your full name', phEmail:'your@email.com', phCompany:'Optional', phSelect:'Select', phMessage:'Tell us about your project or inquiry',
         send:'Send Inquiry', sending:'Sending...', thanks:'Thank you.', soon:'We will be in touch shortly.',
         error:'Something went wrong. Please try again or email us directly.',
         options:['Evaluation & Distinction','Consulting','The Sense','Other'] },
-  pt: { name:'Nome', email:'Email', company:'Propriedade / Empresa', interest:'Área de Interesse', message:'Mensagem',
+  pt: { name:'Nome', email:'Email', company:'Propriedade / Marca', interest:'Área de Interesse', message:'Mensagem',
         phName:'O seu nome completo', phEmail:'o.seu@email.com', phCompany:'Opcional', phSelect:'Seleccionar', phMessage:'Fale-nos do seu projecto ou pedido',
         send:'Enviar Pedido', sending:'A enviar...', thanks:'Obrigado.', soon:'Entraremos em contacto em breve.',
         error:'Algo correu mal. Por favor tente de novo ou envie-nos um email directamente.',
