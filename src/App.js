@@ -22,24 +22,26 @@ const FOIL = "linear-gradient(115deg,#8A6828 0%,#C4A057 30%,#A98334 52%,#CDAA60 
 
 const T = {
   en: {
-    nav:["About","Dimensions","Services","Founder","Approach","Distinction","Symbol","Contact"],
-    ids:["about","dimensions","services","founder","approach","distinction","symbol","contact"],
+    nav:["The Method","Services","The Distinction","Founder","Contact"],
+    ids:["dimensions","services","distinction","founder","contact"],
     sig:"The invisible measure.",
     tag:"The Invisible Measure",
+    fn:"The invisible quality of hospitality: how a guest feels, what makes them feel that way, and what remains.",
+    scope:"Inaugural scope: hotels and resorts, private estates and gastronomy. Other experiences by invitation.",
     watch:"Watch the Film",
     abt:"What We Do",
     ab1:"L’Essence d’Or is an independent evaluation and elevation programme for luxury experiences. We measure what traditional systems do not: the invisible quality of an experience: how it is felt, sustained and remembered.",
     ab2:"We work with properties and brands that understand that true excellence is not defined by infrastructure, price or aesthetic alone, but by the depth of presence, anticipation and care that shapes every moment.",
-    ab3:"Our work spans three areas: qualitative evaluation against a proprietary framework of five dimensions, confidential consulting for properties seeking elevation, and formation programmes that transform teams from within.",
-    ab4:"The L’Essence d’Or Distinction is awarded to those who demonstrate sustained excellence across all dimensions. It is not systematically given. It is earned.",
+    ab3:"Our work spans three areas: qualitative evaluation against a proprietary framework of five dimensions, confidential consulting for properties seeking elevation, and training programmes that transform teams from within.",
+    ab4:"The Distinction recognises sustained quality across all five dimensions.",
     vc:"It is not perfection we seek, but presence, consistency and intention.",
     dt:"The Five Dimensions",
     di:"We evaluate what others do not. Five interconnected dimensions that capture not only what is visible, but what is felt and what endures.",
     dims:[
-      {n:"I",nm:"The Seen",s:"Visible Quality",d:"Aesthetics, materiality, mise en place, visual coherence, lighting, presentation and operational fluidity.",v:"A guest checks in at dusk. The curtains have already been drawn to frame the exact angle where the sun is setting. No one mentioned the view. The room simply knew what time it was."},
-      {n:"II",nm:"The Felt",s:"Invisible Quality",d:"Atmosphere, rhythm, anticipation, sensory calibration, density of experience and the sensation of care before it is ever requested.",v:"After three days, a guest realises she has not looked at her phone once. Not because there was no signal. Because nothing was missing."},
-      {n:"III",nm:"The Human",s:"Relational Quality",d:"Posture, listening, contextual reading, discretion, calibrated empathy, personalisation and elegance in every interaction.",v:"A couple arrives in silence. The team reads it. No cheerful remarks over dinner. Only presence, warmth, and a handwritten note left in the room: we are here if you need anything."},
-      {n:"IV",nm:"The Rooted",s:"Cultural Quality",d:"Authenticity, sense of place, heritage, narrative coherence, sophistication without displacement.",v:"Breakfast does not present a local ingredient as decoration. The grandmother from the village still bakes the bread. The story is not told. It is tasted."},
+      {n:"I",nm:"The Seen",s:"Visible Quality",d:"Aesthetics, materiality, mise en place, visual coherence, lighting, presentation and operational fluidity.",v:"A guest checks in at dusk. The curtains have been drawn to the light, and left for her to decide. No one announced the view. The room was simply ready for the hour."},
+      {n:"II",nm:"The Felt",s:"Invisible Quality",d:"Atmosphere, rhythm, anticipation, sensory calibration, density of experience and the sensation of care before it is ever requested.",v:"On the third morning, a guest lingers over breakfast. Nobody clears the table. Nobody asks whether everything is to her liking. The pace is hers."},
+      {n:"III",nm:"The Human",s:"Relational Quality",d:"Posture, listening, contextual reading, discretion, calibrated empathy, personalisation and elegance in every interaction.",v:"A couple arrives in silence. The team notices, does not interpret, and offers a quiet table. If the mood lifts over dinner, the service lifts with it."},
+      {n:"IV",nm:"The Rooted",s:"Cultural Quality",d:"Authenticity, sense of place, heritage, narrative coherence, sophistication without displacement.",v:"Breakfast does not present a local ingredient as decoration. The bread is still baked in the village. The story is not told. It is tasted."},
       {n:"V",nm:"The Sustained",s:"Systemic Quality",d:"Internal standards, consistency, continuous training, leadership culture, resilience and commitment to elevation.",v:"A new team member, in her second week, resolves a difficult request with the same calm and grace as the director. That is not luck. That is culture."}
     ],
     ft:"For",
@@ -49,27 +51,27 @@ const T = {
     svcs:[
       {t:"Evaluation & Distinction",d:"A rigorous, multi-layered assessment of your experience against the five dimensions. Combines documentary analysis, anonymous mystery experience, on-site observation and team dialogue. Culminates in a confidential report and, where merited, the L’Essence d’Or Distinction."},
       {t:"Consulting",d:"For properties and brands that aspire to elevation but are not yet ready for formal evaluation. We work alongside leadership to identify gaps, redesign service philosophy and build the internal culture that sustains excellence."},
-      {t:"The Sense",d:"The Sense trains perception. L’Essence d’Or measures the result. From executive immersions for leadership to sensorial workshops for operational teams: people trained to sense, not merely to execute."}
+      {t:"The Sense",d:"The Sense trains perception. L’Essence d’Or measures the result. From executive immersions for directors, general managers and owners, to sensory workshops for operational teams: two to three days, groups of no more than twelve, each participant leaving with an elevation plan of their own and a follow-up conversation afterwards. The Sense certifies people. The Distinction recognises experiences. Training is contracted independently and has value of its own."}
     ],
     sn:"The Distinction is rare by design and, in its inaugural phase, operates by invitation. The Sense and Consulting exist for those who aspire to it, and are available upon request.",
     at:"The Approach",
-    ah:"Rigour beneath restraint.",
+    ah:"Discretion in form. Rigour in method.",
     steps:[
       {n:"01",t:"Invitation",d:"We begin with alignment. Properties and experiences are assessed for compatibility with the Method before any evaluation begins."},
       {n:"02",t:"Evaluation",d:"A multi-layered process combining documentary analysis, anonymous experiential assessment, technical observation and structured dialogue with teams."},
-      {n:"03",t:"Report",d:"A confidential dossier delivered exclusively to leadership: analysis by dimension, recognition of strengths and concrete recommendations for elevation."},
-      {n:"04",t:"Distinction",d:"Awarded only when sustained excellence is confirmed across all five dimensions. Not all will receive it. Most will not."}
+      {n:"03",t:"The Afterwards",d:"Four weeks later, we return to the experience from a distance: what is recalled unprompted, which gesture remained, what would bring a guest back. What a stay leaves behind is part of what we measure."},
+      {n:"04",t:"Report",d:"A confidential dossier delivered exclusively to leadership: analysis by dimension, recognition of strengths, a section on what remained, and concrete recommendations."},
+      {n:"05",t:"Distinction",d:"Awarded only when sustained excellence is confirmed across all five dimensions. Not all will receive it. Most will not."}
     ],
     dst:"The Distinction",
     dsh:"Most luxury is designed. Very little is truly understood.",
-    dsb:"The L’Essence d’Or Distinction is not systematically awarded. It is granted only when the panel confirms sustained depth across all five dimensions.",
+    dsb:"The Distinction is not given. It is earned when quality holds across all five dimensions.",
     dsc:"The Distinction is not pursued. It is recognised.",
-    dsv:[["Star ratings measure infrastructure.","We measure how the experience is felt."],["Editorial awards measure popularity.","We measure depth and consistency."],["Rankings measure declared satisfaction.","We measure invisible quality."]],
-    dsr:["Valid for two years, subject to reassessment. Rare by design.","Recognised properties and experiences join The Circle."],
+    dsr:["Valid for two years, subject to reassessment. Rare by design.","Recognition cannot be purchased. The Sense and Consulting are contracted independently and do not determine the outcome.","Recognised properties and experiences join The Circle."],
     enter:"Enter",withSound:"with sound",silence:"enter in silence",sound:"Sound",
     gkt:"Our Symbol",
-    gks1:"The Ginkgo Biloba is over 200 million years old. The oldest living tree on earth. It survived ice ages, mass extinctions, fires and catastrophes that erased entire species. In Hiroshima, six ginkgo trees standing less than two kilometres from the epicentre sprouted again the following spring. In Eastern philosophy, the ginkgo symbolises longevity, resilience, hope and inner peace.",
-    gks2:"Its leaf, two symmetrical lobes joined at a single point, embodies the balance of dualities: visible and invisible, tangible and felt, form and essence. Yin and yang. Not in opposition, but in quiet harmony.",
+    gks1:"The ginkgo is the oldest surviving tree species on earth. It outlived extinctions that erased entire species. In Hiroshima, trees standing less than two kilometres from the epicentre came back the following spring.",
+    gks2:"We read its leaf, two lobes joined at a single point, as the balance we look for: the visible and the invisible, form and essence. Not in opposition, but in quiet harmony.",
     gks3:"In autumn, the ginkgo leaf turns gold. Its most beautiful moment is precisely when it prepares to let go. It does not cling. It transforms.",
     gks4:"This is why the ginkgo is our symbol. Like the excellence we seek, it is not visible at first glance, but it sustains everything built upon it.",
     gk:[
@@ -83,7 +85,7 @@ const T = {
     ],
 
     fdt:"The Founder",
-    frole:"Founder and Creative Director of Made With Love Events, and the mind behind L’Essence d’Or, The Invisible Measure.",
+    frole:"Founder and Creative Director of Made With Love Events, and author of the L’Essence d’Or framework, The Invisible Measure.",
     fs:[
       "Most luxury experiences are well executed. Very few are unforgettable. The difference rarely lies in what can be counted, and almost always in what is felt: a need anticipated, a moment perfectly timed, an atmosphere that feels effortless, the sense of being genuinely considered.",
       "This conviction was shaped through more than a decade in the events industry with Made With Love, where Ana creates destination weddings, private celebrations and hospitality-led events in Portugal and internationally.",
@@ -99,24 +101,26 @@ const T = {
     cr:"© 2026 L’Essence d’Or. All rights reserved."
   },
   pt: {
-    nav:["Sobre","Dimensões","Serviços","Fundadora","Abordagem","Distinção","Símbolo","Contacto"],
-    ids:["about","dimensions","services","founder","approach","distinction","symbol","contact"],
+    nav:["O Método","Serviços","A Distinction","Fundadora","Contacto"],
+    ids:["dimensions","services","distinction","founder","contact"],
     sig:"A medida invisível.",
     tag:"The Invisible Measure",
+    fn:"A qualidade invisível da hospitalidade: como um hóspede se sente, o que o faz sentir assim, e o que permanece.",
+    scope:"Âmbito inaugural: hotéis e resorts, casas e quintas privadas, gastronomia. Outras experiências por convite.",
     watch:"Ver o Filme",
     abt:"O Que Fazemos",
     ab1:"L’Essence d’Or é um programa independente de avaliação e elevação de experiências de luxo. Medimos o que os sistemas tradicionais não medem: a qualidade invisível de uma experiência: como é sentida, sustentada e recordada.",
     ab2:"Trabalhamos com propriedades e marcas que compreendem que a verdadeira excelência não se define apenas pela infraestrutura, pelo preço ou pela estética, mas pela profundidade da presença, antecipação e cuidado que moldam cada momento.",
-    ab3:"O nosso trabalho abrange três áreas: avaliação qualitativa com base num framework proprietário de cinco dimensões, consultoria confidencial para propriedades que procuram elevação, e programas de formação que transformam equipas a partir de dentro.",
-    ab4:"A Distinction de L’Essence d’Or é atribuída a quem demonstra excelência sustentada em todas as dimensões. Não é dada sistematicamente. É conquistada.",
+    ab3:"O nosso trabalho abrange três áreas: avaliação qualitativa com base num referencial próprio de cinco dimensões, consultoria confidencial para propriedades que procuram elevação, e programas de formação que transformam equipas a partir de dentro.",
+    ab4:"A Distinction reconhece qualidade sustentada nas cinco dimensões.",
     vc:"Não é a perfeição que procuramos, mas presença, consistência e intenção.",
     dt:"As Cinco Dimensões",
     di:"Avaliamos o que os outros não avaliam. Cinco dimensões interligadas que captam não apenas o que é visível, mas o que é sentido e o que perdura.",
     dims:[
-      {n:"I",nm:"The Seen",s:"Qualidade Visível",d:"Estética, materialidade, mise en place, coerência visual, iluminação, apresentação e fluidez operacional.",v:"Um hóspede faz o check-in ao entardecer. As cortinas já foram corridas para enquadrar o ângulo exacto em que o sol se põe. Ninguém falou da vista. O quarto simplesmente sabia que horas eram."},
-      {n:"II",nm:"The Felt",s:"Qualidade Invisível",d:"Atmosfera, ritmo, antecipação, calibração sensorial, densidade da experiência e a sensação de cuidado antes de alguma vez ser pedido.",v:"Ao fim de três dias, uma hóspede percebe que não olhou para o telemóvel uma única vez. Não porque não houvesse rede. Porque nada faltava."},
-      {n:"III",nm:"The Human",s:"Qualidade Relacional",d:"Postura, escuta, leitura do contexto, discrição, empatia calibrada, personalização e elegância em cada interacção.",v:"Um casal chega em silêncio. A equipa lê-o. Nenhum comentário animado ao jantar. Apenas presença, calor, e um bilhete manuscrito deixado no quarto: estamos aqui se precisarem de alguma coisa."},
-      {n:"IV",nm:"The Rooted",s:"Qualidade Cultural",d:"Autenticidade, sentido de lugar, património, coerência narrativa, sofisticação sem deslocamento.",v:"O pequeno-almoço não apresenta um ingrediente local como decoração. A avó da aldeia ainda coze o pão. A história não se conta. Prova-se."},
+      {n:"I",nm:"The Seen",s:"Qualidade Visível",d:"Estética, materialidade, mise en place, coerência visual, iluminação, apresentação e fluidez operacional.",v:"Uma hóspede faz o check-in ao entardecer. As cortinas foram abertas à luz e deixadas ao seu critério. Ninguém anunciou a vista. O quarto estava apenas pronto para aquela hora."},
+      {n:"II",nm:"The Felt",s:"Qualidade Invisível",d:"Atmosfera, ritmo, antecipação, calibração sensorial, densidade da experiência e a sensação de cuidado antes de alguma vez ser pedido.",v:"Na terceira manhã, uma hóspede demora-se ao pequeno-almoço. Ninguém levanta a mesa. Ninguém pergunta se está tudo do seu agrado. O ritmo é o dela."},
+      {n:"III",nm:"The Human",s:"Qualidade Relacional",d:"Postura, escuta, leitura do contexto, discrição, empatia calibrada, personalização e elegância em cada interacção.",v:"Um casal chega em silêncio. A equipa nota, não interpreta, e oferece uma mesa resguardada. Se ao jantar a disposição mudar, o serviço muda com ela."},
+      {n:"IV",nm:"The Rooted",s:"Qualidade Cultural",d:"Autenticidade, sentido de lugar, património, coerência narrativa, sofisticação sem deslocamento.",v:"O pequeno-almoço não apresenta um ingrediente local como decoração. O pão continua a ser cozido na aldeia. A história não se conta. Prova-se."},
       {n:"V",nm:"The Sustained",s:"Qualidade Sistémica",d:"Padrões internos, consistência, formação contínua, cultura de liderança, resiliência e compromisso com a elevação.",v:"Uma nova colaboradora, na segunda semana, resolve um pedido difícil com a mesma calma e a mesma graça do director. Não é sorte. É cultura."}
     ],
     ft:"Para",
@@ -126,27 +130,27 @@ const T = {
     svcs:[
       {t:"Avaliação & Distinction",d:"Uma avaliação rigorosa, em várias camadas, da sua experiência face às cinco dimensões. Combina análise documental, mystery experience anónima, observação no local e diálogo com as equipas. Culmina num relatório confidencial e, quando merecida, na Distinction de L’Essence d’Or."},
       {t:"Consultoria",d:"Para propriedades e marcas que aspiram à elevação mas não estão ainda prontas para avaliação formal. Trabalhamos lado a lado com a liderança para identificar lacunas, redesenhar a filosofia de serviço e construir a cultura interna que sustenta a excelência."},
-      {t:"The Sense",d:"The Sense treina a percepção. L’Essence d’Or mede o resultado. De imersões executivas para a liderança a workshops sensoriais para equipas operacionais: pessoas formadas para sentir, não apenas para executar."}
+      {t:"The Sense",d:"The Sense treina a percepção. L’Essence d’Or mede o resultado. De imersões executivas para directores, general managers e proprietários, a workshops sensoriais para equipas operacionais: dois a três dias, grupos de no máximo doze, cada participante sai com um plano de elevação próprio e uma conversa de acompanhamento depois. The Sense certifica pessoas. A Distinction reconhece experiências. A formação contrata-se de forma independente e tem valor próprio."}
     ],
     sn:"A Distinction é rara por princípio e, na sua fase inaugural, funciona por convite. The Sense e a Consultoria existem para quem aspira a ela, e estão disponíveis mediante pedido.",
     at:"A Abordagem",
-    ah:"Rigor sob contenção.",
+    ah:"Discrição na forma. Rigor no método.",
     steps:[
       {n:"01",t:"Convite",d:"Começamos pelo alinhamento. Propriedades e experiências são avaliadas quanto à compatibilidade com o Método antes de qualquer avaliação começar."},
       {n:"02",t:"Avaliação",d:"Um processo em várias camadas que combina análise documental, avaliação experiencial anónima, observação técnica e diálogo estruturado com as equipas."},
-      {n:"03",t:"Relatório",d:"Um dossier confidencial entregue exclusivamente à liderança: análise por dimensão, reconhecimento dos pontos fortes e recomendações concretas de elevação."},
-      {n:"04",t:"Distinction",d:"Atribuída apenas quando a excelência sustentada é confirmada nas cinco dimensões. Nem todos a receberão. A maioria não a receberá."}
+      {n:"03",t:"The Afterwards",d:"Quatro semanas depois, voltamos à experiência à distância: o que se recorda sem ser perguntado, que gesto ficou, o que faria um hóspede voltar. O que uma estadia deixa é parte do que medimos."},
+      {n:"04",t:"Relatório",d:"Um dossier confidencial entregue exclusivamente à liderança: análise por dimensão, reconhecimento dos pontos fortes, uma secção sobre o que permaneceu, e recomendações concretas."},
+      {n:"05",t:"Distinction",d:"Atribuída apenas quando a excelência sustentada é confirmada nas cinco dimensões. Nem todos a receberão. A maioria não a receberá."}
     ],
-    dst:"A Distinção",
+    dst:"A Distinction",
     dsh:"A maior parte do luxo é desenhada. Muito pouco é verdadeiramente compreendido.",
-    dsb:"A Distinction de L’Essence d’Or não é atribuída sistematicamente. Só é concedida quando o painel confirma profundidade sustentada nas cinco dimensões.",
+    dsb:"A Distinction não se dá. Conquista-se quando a qualidade se mantém nas cinco dimensões.",
     dsc:"A Distinction não se persegue. Reconhece-se.",
-    dsv:[["As classificações por estrelas medem a infraestrutura.","Nós medimos como a experiência é sentida."],["Os prémios editoriais medem a popularidade.","Nós medimos profundidade e consistência."],["Os rankings medem a satisfação declarada.","Nós medimos a qualidade invisível."]],
-    dsr:["Válida por dois anos, sujeita a reavaliação. Rara por princípio.","As propriedades e experiências reconhecidas entram no The Circle."],
+    dsr:["Válida por dois anos, sujeita a reavaliação. Rara por princípio.","O reconhecimento não se compra. The Sense e a Consultoria contratam-se de forma independente e não determinam o resultado.","As propriedades e experiências reconhecidas entram no The Circle."],
     enter:"Entrar",withSound:"com som",silence:"entrar em silêncio",sound:"Som",
     gkt:"O Nosso Símbolo",
-    gks1:"O Ginkgo Biloba tem mais de 200 milhões de anos. A árvore viva mais antiga da Terra. Sobreviveu a eras glaciares, a extinções em massa, a incêndios e a catástrofes que apagaram espécies inteiras. Em Hiroshima, seis árvores de ginkgo a menos de dois quilómetros do epicentro voltaram a brotar na primavera seguinte. Na filosofia oriental, o ginkgo simboliza longevidade, resiliência, esperança e paz interior.",
-    gks2:"A sua folha, dois lóbulos simétricos unidos por um único ponto, encarna o equilíbrio das dualidades: visível e invisível, tangível e sentido, forma e essência. Yin e yang. Não em oposição, mas em harmonia serena.",
+    gks1:"O ginkgo é a espécie de árvore viva mais antiga da Terra. Atravessou extinções que apagaram espécies inteiras. Em Hiroshima, algumas árvores a menos de dois quilómetros do epicentro voltaram a brotar na primavera seguinte.",
+    gks2:"Lemos a sua folha, dois lóbulos unidos por um único ponto, como o equilíbrio que procuramos: o visível e o invisível, a forma e a essência. Não em oposição, mas em harmonia serena.",
     gks3:"No outono, a folha de ginkgo torna-se dourada. O seu momento mais belo é precisamente quando se prepara para se desprender. Não se agarra. Transforma-se.",
     gks4:"É por isso que o ginkgo é o nosso símbolo. Como a excelência que procuramos, não é visível à primeira vista, mas sustenta tudo o que é construído sobre ela.",
     gk:[
@@ -160,7 +164,7 @@ const T = {
     ],
 
     fdt:"A Fundadora",
-    frole:"Fundadora e Directora Criativa da Made With Love Events, e a mente por detrás de L’Essence d’Or, The Invisible Measure.",
+    frole:"Fundadora e Directora Criativa da Made With Love Events, e autora do referencial de avaliação de L’Essence d’Or, The Invisible Measure.",
     fs:[
       "A maior parte das experiências de luxo é bem executada. Muito poucas são inesquecíveis. A diferença raramente está no que se pode contar, e quase sempre no que se sente: uma necessidade antecipada, um momento no instante certo, uma atmosfera que parece não exigir esforço, a sensação de ser genuinamente considerado.",
       "Esta convicção formou-se ao longo de mais de uma década no sector dos eventos com a Made With Love, onde Ana cria destination weddings, celebrações privadas e eventos de hospitalidade em Portugal e a nível internacional.",
@@ -438,6 +442,7 @@ export default function App(){
           <button onClick={function(){enter(true);}} style={{background:"none",border:"1px solid rgba(251,246,238,0.45)",color:CREAM,fontFamily:F,fontSize:14,letterSpacing:".38em",textTransform:"uppercase",padding:"16px 44px 15px 48px",cursor:"pointer"}}>{t.enter}</button>
           <p style={{fontFamily:F,fontSize:12,letterSpacing:".2em",textTransform:"uppercase",color:CREAM_M,marginTop:14}}>{t.withSound}</p>
           <button onClick={function(){enter(false);}} style={{background:"none",border:"none",color:CREAM_M,fontFamily:F,fontSize:13,fontStyle:"italic",cursor:"pointer",marginTop:26,textDecoration:"underline",textUnderlineOffset:4,textDecorationColor:"rgba(251,246,238,0.25)"}}>{t.silence}</button>
+          <p style={{fontFamily:F,fontSize:"clamp(14px,1.5vw,16px)",lineHeight:1.7,color:CREAM_M,maxWidth:460,margin:"38px auto 0"}}>{t.fn}</p>
         </div>
       </div>}
 
@@ -491,6 +496,7 @@ export default function App(){
             <div style={{height:1,background:"linear-gradient(90deg,transparent,"+GOLD_L+",transparent)",animation:"xl 1.6s ease forwards",animationDelay:"2.4s",width:0}}/>
           </div>
           <p style={{fontFamily:F,fontSize:"clamp(12px,1.5vw,15px)",letterSpacing:".32em",color:CREAM_D,textTransform:"uppercase"}}>{t.tag}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",lineHeight:1.7,color:CREAM_D,maxWidth:520,margin:"26px auto 0"}}>{t.fn}</p>
         </div>
         <div style={{position:"absolute",bottom:34,animation:"br 2.8s ease infinite"}}>
           <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={CREAM} strokeWidth="1" opacity=".45"/><circle cx="10" cy="10" r="2" fill={CREAM} opacity=".6"/></svg>
@@ -535,6 +541,9 @@ export default function App(){
               );
             })}
           </div>
+          <FI delay={0.7} type="fade">
+            <p style={{fontFamily:F,fontSize:"clamp(13px,1.3vw,15px)",fontStyle:"italic",color:CREAM_M,textAlign:"center",maxWidth:560,margin:"34px auto 0",lineHeight:1.7}}>{t.scope}</p>
+          </FI>
         </div>
       </section>
 
@@ -607,16 +616,6 @@ export default function App(){
         <FI delay={0.2}>
           <p style={{fontFamily:F,fontSize:"clamp(24px,3vw,38px)",fontWeight:300,lineHeight:1.35,color:CREAM,textAlign:"center",maxWidth:560,margin:"24px auto 0"}}>{t.dsh}</p>
         </FI>
-        <div style={{maxWidth:680,margin:"56px auto 0"}}>
-          {t.dsv.map(function(pair,i){
-            return <FI key={i} delay={0.3+i*0.12} type="fade">
-              <div style={{textAlign:"center",padding:"14px 0"}}>
-                <p style={{fontFamily:F,fontSize:"clamp(15px,1.5vw,17px)",color:CREAM_M,letterSpacing:".02em"}}>{pair[0]}</p>
-                <p style={{fontFamily:F,fontSize:"clamp(18px,2vw,22px)",color:CREAM,marginTop:4}}>{pair[1]}</p>
-              </div>
-            </FI>;
-          })}
-        </div>
         <div style={{height:52}}/>
         <FI delay={0.35}>{P(t.dsb,{maxWidth:620})}</FI>
         <div style={{height:22}}/>
