@@ -290,13 +290,83 @@ function Dimensions({dims,mobile}){
   );
 }
 
-/* Small gold plus that turns into a minus when open */
-function Plus({on}){
-  return <span aria-hidden="true" style={{position:"relative",display:"inline-block",width:12,height:12,flexShrink:0,opacity:on?1:.6,transition:"opacity .3s"}}>
-    <span style={{position:"absolute",left:0,right:0,top:5.5,height:1,background:GOLD_L}}/>
-    <span style={{position:"absolute",top:0,bottom:0,left:5.5,width:1,background:GOLD_L,transform:on?"scaleY(0)":"scaleY(1)",transition:"transform .35s ease"}}/>
-  </span>;
+/* A small gold point: hollow when closed, filled when open */
+function Dot({on}){
+  return <span aria-hidden="true" style={{display:"inline-block",width:7,height:7,borderRadius:"50%",border:"1px solid "+GOLD_L,background:on?GOLD_L:"transparent",flexShrink:0,opacity:on?1:.7,transform:on?"scale(1.15)":"scale(1)",transition:"background .4s ease, transform .4s ease, opacity .3s"}}/>;
 }
+/* The Approach: four steps on one line. Hover, tap or wait; one step is lit at a time. */
+function Approach({steps,mobile}){
+  const [active,setActive]=useState(0);
+  const [auto,setAuto]=useState(true);
+  const ref=useRef(null);
+  const seen=useInView(ref);
+  useEffect(function(){
+    if(!auto||!seen)return;
+    var id=setInterval(function(){setActive(function(a){return (a+1)%steps.length;});},4200);
+    return function(){clearInterval(id);};
+  },[auto,seen,steps.length]);
+  var pick=function(i){setAuto(false);setActive(i);};
+
+  if(mobile){
+    return (
+      <div ref={ref} style={{maxWidth:720,margin:"8px auto 0"}}>
+        {steps.map(function(x,i){
+          var on=active===i||PRERENDER;
+          return (
+            <div key={x.n} role="button" tabIndex={0} onClick={function(){pick(i);}} onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}}}
+              style={{padding:"18px 0",cursor:"pointer",outline:"none"}}>
+              <div style={{display:"flex",alignItems:"center",gap:18}}>
+                <span style={{fontFamily:F,fontSize:30,fontWeight:300,color:GOLD,lineHeight:1,minWidth:"1.5em",opacity:on?1:.6,transition:"opacity .4s"}}>{x.n}</span>
+                <h3 style={{fontFamily:F,fontSize:24,fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",transition:"color .4s"}}>{x.t}</h3>
+              </div>
+              <div style={{maxHeight:on?260:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
+                <p style={{fontFamily:F,fontSize:17,color:CREAM_D,lineHeight:1.8,paddingTop:12,paddingLeft:"calc(1.5em + 18px)"}}>{x.d}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  var n=steps.length;
+  return (
+    <div ref={ref} style={{maxWidth:960,margin:"24px auto 0"}}>
+      {/* the line and the points */}
+      <div style={{position:"relative",height:1,background:"linear-gradient(90deg,transparent,"+LINE+" 12%,"+LINE+" 88%,transparent)",margin:"0 "+(100/(n*2))+"%"}}>
+        {steps.map(function(x,i){
+          var on=active===i;
+          var left=(i/(n-1))*100;
+          return <span key={x.n} style={{position:"absolute",left:left+"%",top:"50%",transform:"translate(-50%,-50%)",width:on?9:6,height:on?9:6,borderRadius:"50%",border:"1px solid "+GOLD_L,background:on?GOLD_L:DEEP,boxShadow:on?"0 0 18px 4px rgba(201,165,92,0.28)":"none",transition:"all .5s ease"}}/>;
+        })}
+      </div>
+      {/* numerals + titles */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat("+n+",1fr)",marginTop:30}}>
+        {steps.map(function(x,i){
+          var on=active===i;
+          return (
+            <div key={x.n} role="button" tabIndex={0} aria-pressed={on} onMouseEnter={function(){pick(i);}} onFocus={function(){pick(i);}} onClick={function(){pick(i);}}
+              onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}}}
+              style={{textAlign:"center",cursor:"pointer",padding:"8px 10px",outline:"none"}}>
+              <div style={{fontFamily:F,fontSize:"clamp(40px,4.6vw,60px)",fontWeight:300,color:GOLD,lineHeight:1,opacity:on?1:.42,transform:on?"translateY(0)":"translateY(4px)",transition:"opacity .5s ease, transform .6s ease"}}>{x.n}</div>
+              <div style={{fontFamily:F,fontSize:"clamp(13px,1.2vw,15px)",letterSpacing:".24em",textTransform:"uppercase",color:on?GOLD_L:CREAM_M,marginTop:14,transition:"color .4s"}}>{x.t}</div>
+            </div>
+          );
+        })}
+      </div>
+      {/* the description of the lit step */}
+      <div style={{position:"relative",minHeight:120,marginTop:40}}>
+        {steps.map(function(x,i){
+          var on=active===i;
+          return (
+            <p key={x.n} aria-hidden={!on} style={{position:on?"relative":"absolute",left:0,right:0,top:0,fontFamily:F,fontSize:"clamp(17px,1.9vw,21px)",lineHeight:1.8,color:CREAM_D,textAlign:"center",maxWidth:640,margin:"0 auto",opacity:on?1:0,transform:on?"translateY(0)":"translateY(10px)",transition:"opacity .7s ease, transform .8s cubic-bezier(.2,.7,.2,1)",pointerEvents:on?"auto":"none"}}>{x.d}</p>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function useIsMobile(){
   const [m,setM]=useState(typeof window!=="undefined"&&window.innerWidth<900);
   useEffect(()=>{
@@ -314,7 +384,6 @@ export default function App(){
   });
   const [menu,setMenu]=useState(false);
   const [openSvc,setOpenSvc]=useState(-1);
-  const [openStep,setOpenStep]=useState(-1);
   const [sound,setSound]=useState(false);
   const audioRef=useRef(null);
   var fadeTo=function(a,target,ms){
@@ -358,7 +427,7 @@ export default function App(){
     <div style={{fontFamily:F,background:CHOC,color:CREAM,overflowX:"hidden"}}>
       <style>{"*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:"+CHOC+";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}section{display:block;position:relative}::selection{background:"+GOLD+";color:"+DEEP+"}a{transition:opacity .3s ease}a:hover{opacity:.75}button{transition:opacity .3s ease}button:hover{opacity:.75}"+
       "@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes br{0%,100%{opacity:.25}50%{opacity:.75}}@keyframes xl{from{width:0}to{width:110px}}@keyframes sf{from{opacity:1}to{opacity:0;pointer-events:none}}@keyframes sl{0%{opacity:0;transform:scale(.96)}40%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1)}}"+
-      "@keyframes eq{from{transform:scaleY(.25)}to{transform:scaleY(1)}}@keyframes foil{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}"+
+      ".rv h3{transition:color .4s ease}.rv:hover h3{color:"+GOLD_L+"}@keyframes eq{from{transform:scaleY(.25)}to{transform:scaleY(1)}}@keyframes foil{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}"+
       "@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}video{display:none!important}}"}</style>
 
       {/* Film grain: tactile warmth */}
@@ -481,12 +550,12 @@ export default function App(){
           {t.svcs.map(function(x,i){
             var on=openSvc===i||PRERENDER;
             return (<FI key={i} delay={0.1+i*0.1} type="fade">
-              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenSvc(on&&!PRERENDER?-1:i);}}
+              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenSvc(on&&!PRERENDER?-1:i);}} onMouseEnter={function(){if(!mobile)setOpenSvc(i);}}
                 onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpenSvc(on?-1:i);}}}
-                style={{cursor:"pointer",padding:"22px 0",textAlign:"center",outline:"none"}}>
+                className="rv" style={{cursor:"pointer",padding:"22px 0",textAlign:"center",outline:"none"}}>
                 <div style={{display:"inline-flex",alignItems:"center",gap:16}}>
                   <h3 style={{fontFamily:F,fontSize:"clamp(26px,3vw,38px)",fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",transition:"color .4s ease"}}>{x.t}</h3>
-                  <Plus on={on}/>
+                  <Dot on={on}/>
                 </div>
                 <div style={{maxHeight:on?300:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
                   <div style={{width:40,height:1,background:"linear-gradient(90deg,transparent,"+GOLD+",transparent)",margin:"18px auto 18px"}}/>
@@ -529,29 +598,11 @@ export default function App(){
         </div>
       </section>
 
-      {/* APPROACH: four steps, each opening on click */}
+      {/* APPROACH: a path of four steps */}
       <section id="approach" style={{padding:pad,background:DEEP}}>
         <FI>{S(t.at)}<GL/></FI>
-        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM_D,textAlign:"center",maxWidth:560,margin:"0 auto 40px"}}>{t.ah}</p></FI>
-        <div style={{maxWidth:760,margin:"0 auto"}}>
-          {t.steps.map(function(x,i){
-            var on=openStep===i||PRERENDER;
-            return (<FI key={x.n} delay={i*0.1} type="fade">
-              <div role="button" tabIndex={0} aria-expanded={on} onClick={function(){setOpenStep(on&&!PRERENDER?-1:i);}}
-                onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpenStep(on?-1:i);}}}
-                style={{cursor:"pointer",padding:"22px 0",outline:"none"}}>
-                <div style={{display:"flex",alignItems:"center",gap:"clamp(18px,4vw,40px)"}}>
-                  <span style={{fontFamily:F,fontSize:"clamp(34px,4.5vw,50px)",fontWeight:300,color:GOLD,lineHeight:1,minWidth:"1.6em",opacity:on?1:.75,transition:"opacity .4s"}}>{x.n}</span>
-                  <h3 style={{fontFamily:F,fontSize:"clamp(24px,2.8vw,34px)",fontWeight:300,color:on?GOLD_L:CREAM,letterSpacing:".04em",flex:1,transition:"color .4s ease"}}>{x.t}</h3>
-                  <Plus on={on}/>
-                </div>
-                <div style={{maxHeight:on?300:0,overflow:"hidden",transition:"max-height .7s ease, opacity .5s ease",opacity:on?1:0}}>
-                  <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",color:CREAM_D,lineHeight:1.8,paddingTop:14,paddingLeft:"calc(1.6em * 1.3 + clamp(18px,4vw,40px))",maxWidth:640}}>{x.d}</p>
-                </div>
-              </div>
-            </FI>);
-          })}
-        </div>
+        <FI delay={0.15}><p style={{fontFamily:F,fontSize:"clamp(20px,2.4vw,26px)",fontWeight:300,color:CREAM_D,textAlign:"center",maxWidth:560,margin:"0 auto 56px"}}>{t.ah}</p></FI>
+        <FI delay={0.25} type="fade"><Approach steps={t.steps} mobile={mobile}/></FI>
       </section>
 
       {/* DISTINCTION: one statement, the contrast, the terms */}
