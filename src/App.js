@@ -4,7 +4,6 @@ import ContactForm from './ContactForm';
 /* Palette: dark chocolate system */
 const DEEP = "#1F150C";      // deepest: hero veil, footer
 const CHOC = "#2D1F12";      // dark chocolate (base)
-const COCOA = "#3B2A19";     // bitter cocoa, lifted panels
 const GOLD = "#B08838";      // matte gold
 const GOLD_L = "#C9A55C";    // gold for text on dark
 const CREAM = "#FBF6EE";
@@ -26,7 +25,8 @@ const T = {
     ids:["dimensions","services","distinction","founder","contact"],
     sig:"The invisible measure.",
     tag:"The Invisible Measure",
-    fn:"The invisible quality of hospitality: how a guest feels, what makes them feel that way, and what remains.",
+    fn:"We evaluate and elevate the invisible quality of luxury hospitality.",
+    fn2:"How guests feel. The care that shapes it. What remains.",
     scope:"Inaugural scope: hotels and resorts, private estates and gastronomy. Other experiences by invitation.",
     watch:"Watch the Film",
     abt:"What We Do",
@@ -105,7 +105,8 @@ const T = {
     ids:["dimensions","services","distinction","founder","contact"],
     sig:"A medida invisível.",
     tag:"The Invisible Measure",
-    fn:"A qualidade invisível da hospitalidade: como um hóspede se sente, o que o faz sentir assim, e o que permanece.",
+    fn:"Avaliamos e elevamos a qualidade invisível da hospitalidade de luxo.",
+    fn2:"Como os hóspedes se sentem. O cuidado que o molda. O que permanece.",
     scope:"Âmbito inaugural: hotéis e resorts, casas e quintas privadas, gastronomia. Outras experiências por convite.",
     watch:"Ver o Filme",
     abt:"O Que Fazemos",
@@ -202,6 +203,10 @@ function FI({children,delay,type}){
 }
 
 /* Hairline with gold fade */
+/* A soft band where one tone meets another */
+function Tone({from,to,h}){
+  return <div aria-hidden="true" style={{height:h||110,background:"linear-gradient(to bottom,"+from+","+to+")"}}/>;
+}
 function GL({w}){return <div style={{display:"flex",justifyContent:"center",margin:"26px 0"}}><div style={{width:w||56,height:1,background:"linear-gradient(90deg,transparent,rgba(176,136,56,0.7),transparent)"}}/></div>;}
 
 /* Matte gold foil applied to the vector logo via CSS mask */
@@ -238,7 +243,7 @@ function Dimensions({dims,mobile}){
     var r=e.currentTarget.getBoundingClientRect();
     setGlow({x:Math.round((e.clientX-r.left)/r.width*100),y:Math.round((e.clientY-r.top)/r.height*100)});
   };
-  var glowBg=function(on){return on?"radial-gradient(circle at "+glow.x+"% "+glow.y+"%, rgba(201,165,92,0.12) 0%, rgba(201,165,92,0.04) 32%, transparent 60%), "+COCOA:"transparent";};
+  var glowBg=function(on){return on?"radial-gradient(circle at "+glow.x+"% "+glow.y+"%, rgba(201,165,92,0.10) 0%, rgba(201,165,92,0.035) 34%, transparent 62%)":"transparent";};
 
   if(mobile){
     return (
@@ -247,7 +252,7 @@ function Dimensions({dims,mobile}){
           var on=active===i;
           return (
             <div key={d.n} role="button" tabIndex={0} onClick={function(){pick(on?-1:i);}} onKeyDown={function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(on?-1:i);}}}
-              style={{borderBottom:"1px solid "+HAIR,padding:"22px 18px",background:on?"linear-gradient(180deg,rgba(201,165,92,0.10),rgba(201,165,92,0.02)), "+COCOA:"transparent",transition:"background .6s ease",cursor:"pointer"}}>
+              style={{borderBottom:"1px solid "+HAIR,padding:"22px 18px",background:on?"linear-gradient(180deg,rgba(201,165,92,0.09),rgba(201,165,92,0.02))":"transparent",transition:"background .6s ease",cursor:"pointer"}}>
               <div style={{display:"flex",alignItems:"baseline",gap:18}}>
                 <span style={{fontFamily:F,fontSize:15,letterSpacing:".2em",color:GOLD,minWidth:28}}>{d.n}</span>
                 <span style={{fontFamily:F,fontSize:26,fontWeight:300,color:CREAM,transition:"color .4s"}}>{d.nm}</span>
@@ -438,11 +443,12 @@ export default function App(){
       {/* Entrance: logo, one word. A gesture is what lets the music begin. */}
       {splash&&<div style={{position:"fixed",inset:0,background:DEEP,zIndex:9999,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:24,animation:PRERENDER?"sf .7s ease 1.2s forwards":"none"}}>
         <div style={{width:"clamp(220px,40vw,360px)",animation:"sl 1.4s ease forwards"}}><Logo width="100%" drift={false}/></div>
-        <div style={{marginTop:"clamp(44px,7vh,72px)",textAlign:"center",animation:"fu 1.2s ease 1.1s both"}}>
+        <div style={{marginTop:"clamp(34px,5.5vh,56px)",textAlign:"center",animation:"fu 1.2s ease 1.1s both"}}>
+          <p style={{fontFamily:F,fontSize:"clamp(17px,1.9vw,21px)",lineHeight:1.65,color:CREAM,maxWidth:560,margin:"0 auto"}}>{t.fn}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(15px,1.6vw,18px)",lineHeight:1.7,color:CREAM_D,maxWidth:520,margin:"14px auto clamp(38px,6vh,58px)"}}>{t.fn2}</p>
           <button onClick={function(){enter(true);}} style={{background:"none",border:"1px solid rgba(251,246,238,0.45)",color:CREAM,fontFamily:F,fontSize:14,letterSpacing:".38em",textTransform:"uppercase",padding:"16px 44px 15px 48px",cursor:"pointer"}}>{t.enter}</button>
           <p style={{fontFamily:F,fontSize:12,letterSpacing:".2em",textTransform:"uppercase",color:CREAM_M,marginTop:14}}>{t.withSound}</p>
           <button onClick={function(){enter(false);}} style={{background:"none",border:"none",color:CREAM_M,fontFamily:F,fontSize:13,fontStyle:"italic",cursor:"pointer",marginTop:26,textDecoration:"underline",textUnderlineOffset:4,textDecorationColor:"rgba(251,246,238,0.25)"}}>{t.silence}</button>
-          <p style={{fontFamily:F,fontSize:"clamp(14px,1.5vw,16px)",lineHeight:1.7,color:CREAM_M,maxWidth:460,margin:"38px auto 0"}}>{t.fn}</p>
         </div>
       </div>}
 
@@ -496,7 +502,8 @@ export default function App(){
             <div style={{height:1,background:"linear-gradient(90deg,transparent,"+GOLD_L+",transparent)",animation:"xl 1.6s ease forwards",animationDelay:"2.4s",width:0}}/>
           </div>
           <p style={{fontFamily:F,fontSize:"clamp(12px,1.5vw,15px)",letterSpacing:".32em",color:CREAM_D,textTransform:"uppercase"}}>{t.tag}</p>
-          <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",lineHeight:1.7,color:CREAM_D,maxWidth:520,margin:"26px auto 0"}}>{t.fn}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(16px,1.8vw,19px)",lineHeight:1.7,color:CREAM,maxWidth:560,margin:"26px auto 0"}}>{t.fn}</p>
+          <p style={{fontFamily:F,fontSize:"clamp(15px,1.6vw,17px)",lineHeight:1.75,color:CREAM_D,maxWidth:520,margin:"10px auto 0"}}>{t.fn2}</p>
         </div>
         <div style={{position:"absolute",bottom:34,animation:"br 2.8s ease infinite"}}>
           <svg width="18" height="28" viewBox="0 0 20 30" fill="none"><rect x="1" y="1" width="18" height="28" rx="9" stroke={CREAM} strokeWidth="1" opacity=".45"/><circle cx="10" cy="10" r="2" fill={CREAM} opacity=".6"/></svg>
@@ -518,7 +525,7 @@ export default function App(){
       </section>
 
       {/* DIMENSIONS */}
-      <section id="dimensions" style={{padding:pad,background:COCOA}}>
+      <section id="dimensions" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.dt)}<GL/>{P(t.di)}</FI>
         <Dimensions dims={t.dims} mobile={mobile}/>
 
@@ -532,9 +539,9 @@ export default function App(){
             {t.fwho.map(function(w,i){
               return (
                 <FI key={i} delay={0.15+i*0.12}>
-                  <div style={{padding:"11px 26px",borderRadius:40,border:"1px solid rgba(251,246,238,0.22)",background:"transparent",transition:"border-color .5s ease, background .5s ease"}}
-                    onMouseEnter={function(e){e.currentTarget.style.borderColor="rgba(251,246,238,0.5)";}}
-                    onMouseLeave={function(e){e.currentTarget.style.borderColor="rgba(251,246,238,0.22)";}}>
+                  <div style={{padding:"11px 26px",borderRadius:40,border:"1px solid rgba(176,136,56,0.5)",background:"transparent",transition:"border-color .5s ease, background .5s ease"}}
+                    onMouseEnter={function(e){e.currentTarget.style.borderColor=GOLD_L;e.currentTarget.style.background="rgba(176,136,56,0.07)";}}
+                    onMouseLeave={function(e){e.currentTarget.style.borderColor="rgba(176,136,56,0.5)";e.currentTarget.style.background="transparent";}}>
                     <p style={{fontFamily:F,fontSize:"clamp(15px,1.6vw,17px)",letterSpacing:".06em",color:CREAM,whiteSpace:"nowrap"}}>{w}</p>
                   </div>
                 </FI>
@@ -576,7 +583,7 @@ export default function App(){
       </section>
 
       {/* FOUNDER: portrait and story, on cocoa */}
-      <section id="founder" style={{padding:pad,background:COCOA}}>
+      <section id="founder" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.fdt)}<GL/></FI>
         <div style={{maxWidth:1040,margin:"40px auto 0",display:"grid",gridTemplateColumns:mobile?"1fr":"minmax(260px,0.8fr) 1.2fr",gap:mobile?40:"clamp(40px,6vw,88px)",alignItems:"start"}}>
           <FI type="scale">
@@ -603,6 +610,8 @@ export default function App(){
         </div>
       </section>
 
+      <Tone from={CHOC} to={DEEP}/>
+
       {/* APPROACH: a path of four steps */}
       <section id="approach" style={{padding:pad,background:DEEP}}>
         <FI>{S(t.at)}<GL/></FI>
@@ -611,7 +620,7 @@ export default function App(){
       </section>
 
       {/* DISTINCTION: one statement, the contrast, the terms */}
-      <section id="distinction" style={{padding:"clamp(90px,11vw,150px) clamp(24px,6vw,80px)",background:"radial-gradient(ellipse at 50% 40%,"+COCOA+" 0%,"+CHOC+" 70%)"}}>
+      <section id="distinction" style={{padding:"clamp(90px,11vw,150px) clamp(24px,6vw,80px)",background:DEEP}}>
         <FI type="fade">{S(t.dst)}<GL/></FI>
         <FI delay={0.2}>
           <p style={{fontFamily:F,fontSize:"clamp(24px,3vw,38px)",fontWeight:300,lineHeight:1.35,color:CREAM,textAlign:"center",maxWidth:560,margin:"24px auto 0"}}>{t.dsh}</p>
@@ -626,8 +635,10 @@ export default function App(){
         <FI delay={0.55}>{P(t.dsc,{fontStyle:"italic",color:CREAM,fontSize:"clamp(18px,2vw,22px)"})}</FI>
       </section>
 
+      <Tone from={DEEP} to={CHOC}/>
+
       {/* SYMBOL */}
-      <section id="symbol" style={{padding:pad,background:COCOA}}>
+      <section id="symbol" style={{padding:pad,background:CHOC}}>
         <FI>{S(t.gkt)}<GL/></FI>
         <FI type="scale"><div style={{margin:"20px auto 56px"}}><Mark width="clamp(110px,14vw,170px)"/></div></FI>
         <FI delay={0.15}>{P(t.gks1)}</FI>
@@ -638,6 +649,8 @@ export default function App(){
         <div style={{height:26}}/>
         <FI delay={0.3}>{P(t.gks4)}</FI>
       </section>
+
+      <Tone from={CHOC} to={DEEP}/>
 
       {/* MANIFESTO */}
       <section style={{padding:"clamp(90px,11vw,150px) 24px",background:DEEP,textAlign:"center"}}>
@@ -653,6 +666,8 @@ export default function App(){
           </div>
         </FI>
       </section>
+
+      <Tone from={DEEP} to={CHOC}/>
 
       {/* CONTACT */}
       <section id="contact" style={{padding:pad,background:CHOC,textAlign:"center"}}>
